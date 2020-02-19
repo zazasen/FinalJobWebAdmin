@@ -15,12 +15,16 @@
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="loginClass">
                     <el-form-item prop="username" size="small">
                         <span style="color: gray;font-size: 12px;">用户名</span>
-                        <el-input v-model="ruleForm.username" placeholder="请输入用户名"/>
+                        <el-input v-model="ruleForm.username" placeholder="请输入用户名">
+                            <i slot="prefix" class="el-icon-user"></i>
+                        </el-input>
                     </el-form-item>
                     <el-form-item prop="password" size="small">
                         <span style="color: gray;font-size: 12px;">密码</span>
                         <el-input type="password" v-model="ruleForm.password" placeholder="请输入密码"
-                                  @keydown.enter.native="submitForm('ruleForm')"/>
+                                  @keydown.enter.native="submitForm('ruleForm')">
+                            <i slot="prefix" class="el-icon-lock"></i>
+                        </el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="submitForm('ruleForm')" class="loginButton">登录</el-button>

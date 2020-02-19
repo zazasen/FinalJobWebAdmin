@@ -42,7 +42,7 @@
                 </el-pagination>
             </div>
         </div>
-        <el-dialog title="添加角色" :visible.sync="dialogVisible" width="40%" :show-close="false"
+        <el-dialog :title="diaTitle" :visible.sync="dialogVisible" width="40%" :show-close="false"
                    :close-on-press-escape="false" :close-on-click-modal="false">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
                 <el-form-item label="角色" prop="roleName" style="width: 80%">
@@ -76,6 +76,7 @@
         name: "userManager",
         data() {
             return {
+                diaTitle: "",
                 loading: false,
                 type: 0,
                 multipleSelection: null,
@@ -85,7 +86,7 @@
                     children: 'children',
                     label: 'name'
                 },
-                queryData:{
+                queryData: {
                     roleName: '',
                     roleZh: '',
                 },
@@ -151,6 +152,7 @@
                 }
             },
             initMenus() {
+                this.diaTitle = "添加角色";
                 this.dialogVisible = true;
                 this.type = 0;
                 getRequest("/access/role/getAllMenuWithChildren").then(resp => {
@@ -160,7 +162,7 @@
                 })
             },
             handleDelete(row) {
-                this.$confirm('此操作将删除 <span style="color:red">'+row.roleName+'</span> 角色,是否继续?', '提示', {
+                this.$confirm('此操作将删除 <span style="color:red">' + row.roleName + '</span> 角色,是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning',
@@ -186,6 +188,7 @@
                 this.ruleForm.remark = row.remark;
                 this.ruleForm.id = row.id;
                 this.initMenus();
+                this.diaTitle = "修改角色";
                 this.type = 1;
                 let params = {};
                 params.roleId = row.id;
@@ -250,7 +253,7 @@
                 })
 
             },
-            queryRole(){
+            queryRole() {
                 this.loading = true;
                 this.queryData.pageIndex = this.page.pageIndex;
                 this.queryData.pageSize = this.page.pageSize;
