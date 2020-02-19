@@ -19,22 +19,29 @@
             </el-header>
             <el-container>
                 <el-aside width="200px">
-                    <el-menu router unique-opened>
+                    <el-menu router :default-active="this.$route.path">
                         <el-submenu :index="index+''" v-for="(route,index) in routes" :key="index">
                             <template slot="title">
-                                <i style="margin-right: 5px" :class="route.icon"></i>
+                                <i style="margin-right: 8px;color: #409EFF" :class="route.icon"></i>
                                 <span>{{route.name}}</span>
                             </template>
-                            <el-menu-item :index="childItem.path"
-                                          v-for="(childItem,index_j) in route.children"
-                                          :key="index_j">
-                                {{childItem.name}}
+
+                            <el-menu-item :index="childItem.path" v-for="(childItem,index_j) in route.children" :key="index_j">
+                                <i style="margin-right: 8px;color: #409EFF" :class="childItem.icon"></i>
+                                <span>{{childItem.name}}</span>
                             </el-menu-item>
                         </el-submenu>
                     </el-menu>
                 </el-aside>
                 <el-main>
-                    <router-view/>
+                    <el-breadcrumb separator="/" v-if="!breadItem()">
+                        <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+                        <el-breadcrumb-item>{{this.$router.currentRoute.name}}</el-breadcrumb-item>
+                    </el-breadcrumb>
+                     <router-view style="margin-top: 15px"/>
+                    <div class="homePage" v-if="breadItem()">
+                        这是一个大大的主页
+                    </div>
                 </el-main>
             </el-container>
         </el-container>
@@ -58,6 +65,9 @@
             }
         },
         methods: {
+            breadItem() {
+                return this.$router.currentRoute.path == '/home';
+            },
             commandEvent(param) {
                 if (param == 'logout') {
                     this.$confirm('是否退出登录', '提示', {
@@ -82,6 +92,12 @@
 </script>
 
 <style>
+    .mainHeader{
+
+    }
+    .mainContain{
+        background-color: #F5F5F5;
+    }
     .title {
         font-size: 30px;
         font-family: 华文行楷;
@@ -112,5 +128,12 @@
         color: #ffffff;
         display: flex;
         align-items: center;
+    }
+    .homePage {
+        font-size: 30px;
+        font-family: 华文行楷;
+        color: #52b2ff;
+        text-align: center;
+        padding-top: 50px;
     }
 </style>

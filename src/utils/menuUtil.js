@@ -6,11 +6,8 @@ export const initMenu = (router, store) => {
     }
     getRequest("/system/config/menu").then(data => {
         if (data) {
-            console.info(data.data);
             let fmtRoutes = formatRoutes(data.data);
-            console.info(fmtRoutes);
             router.addRoutes(fmtRoutes);
-            console.info(router);
             store.commit('initRoutes', fmtRoutes);
         }
     })
@@ -33,7 +30,6 @@ export const formatRoutes = (routes) => {
         if (children && children instanceof Array) {
             children = formatRoutes(children);
         }
-        console.info("component:"+component)
         let fmRouter = {
             path: path,
             name: name,

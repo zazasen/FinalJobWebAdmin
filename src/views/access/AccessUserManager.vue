@@ -1,6 +1,6 @@
 <template>
     <div>
-        角色管理
+        用户管理
     </div>
 </template>
 

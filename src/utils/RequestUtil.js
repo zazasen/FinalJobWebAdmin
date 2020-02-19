@@ -19,12 +19,12 @@ axios.interceptors.response.use(success => {
         if (error.response.status == 404) {
             Message.error({message: '404 not found'});
         } else if (error.response.status == 403) {
-            Message.error({message: '您没有对应权限，请联系管理员'});
+            Message.error({message: '403'});
         } else if (error.response.status == 401) {
             Message.error({message: '尚未登录，请登录后再试！'});
             router.replace("/");
         } else if (error.response.status == 500) {
-            Message.error({message: '抱歉,网络开小差了,请稍后重试了'});
+            Message.error({message: '500'});
         } else {
             if (error.response.data.msg) {
                 Message.error({message: error.response.data.msg});

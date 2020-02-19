@@ -1,6 +1,10 @@
 <template>
     <div>
-        <el-card class="box-card">
+        <el-card class="box-card"
+                 v-loading="loading"
+                 element-loading-text="拼命加载中"
+                 element-loading-spinner="el-icon-loading"
+                 element-loading-background="rgba(0, 0, 0, 0.8)">
             <div slot="header" class="loginTitle">
                 <span>登录到人事系统</span>
             </div>
@@ -44,6 +48,7 @@
                 },
                 circleUrl: 'https://cn.neworld.date/theme/material/images/users/avatar-001.jpg',
                 checked: false,
+                loading:false,
                 rules: {
                     username: [
                         {required: true, message: '请输入账号', trigger: 'blur'}
@@ -61,8 +66,10 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        this.loading = true;
                         postKeyValueRequest("/doLogin", this.ruleForm, this.checked).then(resp => {
                             if (resp) {
+                                this.loading = false;
                                 let face = resp.data.userFace;
                                 window.sessionStorage.setItem("currentUser", JSON.stringify(resp.data));
                                 if (this.checked == true) {
