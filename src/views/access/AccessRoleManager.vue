@@ -120,16 +120,27 @@
         },
         methods: {
             mulDel() {
-                let params = {};
-                params.ids = [];
-                for (let i = 0; i < this.multipleSelection.length; i++) {
-                    params.ids[i] = this.multipleSelection[i].id;
-                }
-                postRequest("/access/role/delMulByIds", params).then(resp => {
-                    if (resp) {
-                        this.initRoles();
+                this.$confirm('此操作将删除该角色, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let params = {};
+                    params.ids = [];
+                    for (let i = 0; i < this.multipleSelection.length; i++) {
+                        params.ids[i] = this.multipleSelection[i].id;
                     }
-                })
+                    postRequest("/access/role/delMulByIds", params).then(resp => {
+                        if (resp) {
+                            this.initRoles();
+                        }
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
             },
             handleSelectionChange(val) {
                 if (val.length > 0) {
@@ -149,13 +160,25 @@
                 })
             },
             handleDelete(row) {
-                let params = {};
-                params.id = row.id;
-                postRequest("/access/role/delRoleById", params).then(resp => {
-                    if (resp) {
-                        this.initRoles();
-                    }
-                })
+                this.$confirm('此操作将删除 <span style="color:red">'+row.roleName+'</span> 角色,是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                    dangerouslyUseHTMLString: true
+                }).then(() => {
+                    let params = {};
+                    params.id = row.id;
+                    postRequest("/access/role/delRoleById", params).then(resp => {
+                        if (resp) {
+                            this.initRoles();
+                        }
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
             },
             handleClick(row) {
                 this.ruleForm.roleName = row.roleName;
