@@ -95,7 +95,7 @@
                 defaultCheckedKeys: [],
                 defaultExpandedKeys: [1],
                 page: {
-                    pageSize: 8,
+                    pageSize: 5,
                     pageIndex: 1,
                 },
                 pageSizes: [5, 8, 10, 20],
