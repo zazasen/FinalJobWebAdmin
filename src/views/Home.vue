@@ -1,9 +1,11 @@
 <template>
-    <div>
-        <el-container>
+    <div  style="position: absolute;width:100%;height: 100%;">
+        <el-container style="height: 100%">
             <el-header class="header">
                 <div class="title">
-                    人力资源管理系统
+                    <span>前端用户中心</span>
+                    <el-button style="margin-left: 60px;color: #FAFAFA;width: 40px;height: 100%;border-radius: 0px;
+                    background-color: #0048d4" type="text" :icon="butIcon" @click="isCollapseChange"/>
                 </div>
                 <el-dropdown @command="commandEvent">
                   <span class="el-dropdown-link">
@@ -18,16 +20,16 @@
                 </el-dropdown>
             </el-header>
             <el-container>
-                <el-aside width="200px">
-                    <el-menu router :default-active="this.$route.path">
+                <el-aside width="200px" style="height: 100%">
+                    <el-menu router :default-active="this.$route.path" background-color="#F5F5F5" style="height: 100%" :collapse="isCollapse">
                         <el-submenu :index="index+''" v-for="(route,index) in routes" :key="index">
                             <template slot="title">
-                                <i style="margin-right: 8px;color: #409EFF" :class="route.icon"></i>
+                                <i :class="route.icon"></i>
                                 <span>{{route.name}}</span>
                             </template>
 
                             <el-menu-item :index="childItem.path" v-for="(childItem,index_j) in route.children" :key="index_j">
-                                <i style="margin-right: 8px;color: #409EFF" :class="childItem.icon"></i>
+                                <i :class="childItem.icon"></i>
                                 <span>{{childItem.name}}</span>
                             </el-menu-item>
                         </el-submenu>
@@ -57,6 +59,8 @@
             return {
                 user: JSON.parse(window.sessionStorage.getItem("currentUser")),
                 // routes:this.$router.options.routes
+                butIcon:"el-icon-s-fold",
+                isCollapse:false,
             }
         },
         computed: {
@@ -65,6 +69,14 @@
             }
         },
         methods: {
+            isCollapseChange(){
+                if(this.isCollapse){
+                    this.butIcon = "el-icon-s-fold";
+                }else {
+                    this.butIcon = "el-icon-s-unfold";
+                }
+                this.isCollapse = !this.isCollapse;
+            },
             breadItem() {
                 return this.$router.currentRoute.path == '/home';
             },
@@ -92,21 +104,15 @@
 </script>
 
 <style>
-    .mainHeader{
-
-    }
-    .mainContain{
-        background-color: #F5F5F5;
-    }
     .title {
-        font-size: 30px;
-        font-family: 华文行楷;
+        font-size: 20px;
+        font-family: 华文楷体;
         color: white;
-        margin-left: 20px;
+        height: 100%;
     }
 
     .header {
-        background-color: #409EFF;
+        background-color: #4876FF;
         /*弹性布局*/
         display: flex;
         /*垂直居中*/
