@@ -96,8 +96,16 @@
                         <el-button size="mini" @click="queryStaffDate">搜索</el-button>
                         <el-button size="mini" type="success" @click="addButton">新增</el-button>
                         <el-button size="mini" type="danger" :disabled="mulDelTemp" @click="mulDel">删除</el-button>
-                        <el-button size="mini" type="primary" icon="el-icon-upload2">导入</el-button>
-                        <el-button size="mini" type="primary" icon="el-icon-download">导出</el-button>
+
+                        <el-upload style="display: inline-flex;margin-right: 10px;margin-left: 10px" action="/hr/staff/importStaff"
+                                :show-file-list="false"
+                                :before-upload="beforeUpload"
+                                :on-success="onSuccess"
+                                :on-error="onError"
+                                :disabled="importDisabled">
+                            <el-button size="mini" type="primary" icon="el-icon-upload2">{{importName}}</el-button>
+                        </el-upload>
+                        <el-button size="mini" type="primary" icon="el-icon-download" @click="exportStaffDate">导出</el-button>
                     </el-col>
                 </el-row>
             </el-card>
@@ -112,6 +120,7 @@
                       @selection-change="handleSelectionChange">
                 <el-table-column fixed="left" type="selection" width="55" align="center"/>
                 <el-table-column fixed="left" prop="realName" label="员工姓名" width="100" align="center"/>
+                <el-table-column prop="workId" label="工号" width="100" align="center"/>
                 <el-table-column prop="genderStr" label="性别" width="100" align="center"/>
                 <el-table-column prop="birthday" label="出生日期" width="150" align="center"/>
                 <el-table-column prop="idCard" label="身份证号" width="150" align="center"/>
@@ -129,7 +138,6 @@
                 <el-table-column prop="specialty" label="所属专业" width="150" align="center"/>
                 <el-table-column prop="school" label="毕业院校" width="150" align="center"/>
                 <el-table-column prop="workStateStr" label="在职状态" width="100" align="center"/>
-                <el-table-column prop="workId" label="工号" width="100" align="center"/>
                 <el-table-column prop="contractTermStr" label="合同期限" width="100" align="center"/>
                 <el-table-column prop="workAgeStr" label="工龄" width="100" align="center"/>
                 <el-table-column prop="createTime" label="入职时间" width="150" align="center"/>
@@ -315,6 +323,8 @@
         name: "HrStaffManager",
         data() {
             return {
+                importDisabled:false,
+                importName:"导入",
                 mulDelTemp: true,
                 diaType: "添加",
                 loading: false,
@@ -504,6 +514,24 @@
             this.initPoliticsStatus();
         },
         methods: {
+            onError(response) {
+                this.$message.error(response.msg);
+                this.importName = '导入';
+                this.importDisabled = false;
+            },
+            onSuccess(response) {
+                this.$message.success(response.msg);
+                this.initUserData();
+                this.importName = '导入';
+                this.importDisabled = false;
+            },
+            beforeUpload() {
+                this.importDisabled = true;
+                this.importName = "正在导入";
+            },
+            exportStaffDate(){
+                window.open("/hr/staff/exportStaff", "_parent");
+            },
             mulDel() {
                 this.$confirm('此操作将删除该员工, 是否继续?', '提示', {
                     confirmButtonText: '确定',
