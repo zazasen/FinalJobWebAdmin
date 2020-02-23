@@ -4,8 +4,7 @@
             <el-header class="header">
                 <div class="title">
                     <span>前端用户中心</span>
-                    <el-button style="margin-left: 60px;color: #FAFAFA;width: 40px;height: 100%;border-radius: 0px;
-                    background-color: #0048d4" type="text" :icon="butIcon" @click="isCollapseChange"/>
+                    <el-button style="margin-left: 60px;color: #FAFAFA;height: 100%;" type="text" :icon="butIcon" @click="isCollapseChange"/>
                 </div>
                 <el-dropdown @command="commandEvent">
                   <span class="el-dropdown-link">
