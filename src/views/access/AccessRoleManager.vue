@@ -95,10 +95,10 @@
                 defaultCheckedKeys: [],
                 defaultExpandedKeys: [1],
                 page: {
-                    pageSize: 5,
+                    pageSize: 10,
                     pageIndex: 1,
                 },
-                pageSizes: [5, 8, 10, 20],
+                pageSizes: [10,15,20,50],
                 dialogVisible: false,
                 ruleForm: {
                     roleName: '',

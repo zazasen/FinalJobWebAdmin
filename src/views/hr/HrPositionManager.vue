@@ -45,7 +45,7 @@
                 <el-pagination
                         @size-change="positionHandleSizeChange"
                         @current-change="positionHandleCurrentChange"
-                        :page-sizes="[5, 8, 10, 20]"
+                        :page-sizes="[10,15,20,50]"
                         :page-size="queryFrom.pageSize"
                         layout="sizes, prev, pager, next, jumper, ->, total"
                         :total=total>
@@ -114,7 +114,7 @@
                 queryFrom: {
                     positionLevel: null,
                     positionName: '',
-                    pageSize: 5,
+                    pageSize: 10,
                     pageIndex: 1,
                 },
                 positionForm: {
@@ -180,7 +180,6 @@
                 this.dialogVisible = false;
                 this.updateDialogVisible = false;
                 this.positionForm = {};
-                this.updateForm = {};
             },
             submitPositionForm(formName) {
                 this.$refs[formName].validate((valid) => {
@@ -216,13 +215,11 @@
                 this.positionForm = {};
                 this.dialogVisible = false;
             },
-            resetUpdatePositionForm(formName) {
-                this.$refs[formName].resetFields();
-                this.updateForm = {};
+            resetUpdatePositionForm() {
                 this.updateDialogVisible = false;
             },
             positionHandleClick(row) {
-                Object.assign(this.updateForm, row);
+                this.updateForm = Object.assign({}, row);
                 let flag = this.updateForm.enabled == 1 ? true : false;
                 this.updateForm.enabled = flag;
                 this.updateDialogVisible = true;
