@@ -46,6 +46,8 @@ export const formatRoutes = (routes) => {
                     require(['../views/access/' + component + '.vue'], resolve);
                 }else if (component.startsWith("Hr")) {
                     require(['../views/hr/' + component + '.vue'], resolve);
+                }else if (component.startsWith("Attendance")) {
+                    require(['../views/attendance/' + component + '.vue'], resolve);
                 }
             }
         };

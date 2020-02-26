@@ -5,6 +5,7 @@
         </div>
         <div>
             <el-table :data="depData" border stripe style="width: 80%;margin-top: 10px"
+                      :default-expand-all="true"
                       row-key="id" :expand-row-keys="['1']"
                       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
                       :header-cell-style="{background:'#eef1f6',color:'#606266'}"
