@@ -120,11 +120,20 @@
                     });
                 }
                 if (param == 'signIn') {
-                    if(this.signType == 0){
-                        postRequest("/attendance/sign/signIn")
+                    if (this.signType == 0) {
+                        postRequest("/attendance/sign/signIn").then(resp => {
+                            if (resp) {
+                                this.getSignType();
+                            }
+                        })
+
                     }
                     if (this.signType == 1) {
-                        postRequest("/attendance/sign/signOut")
+                        postRequest("/attendance/sign/signOut").then(resp => {
+                            if (resp) {
+                                this.getSignType();
+                            }
+                        })
                     }
                 }
             }
