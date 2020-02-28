@@ -1,15 +1,16 @@
 <template>
     <div>
-        <el-table :data="myApprovals" border style="width: 850px"
+        <el-table :data="myApprovals" border style="width: 1100px"
                   v-loading="loading"
                   element-loading-text="拼命加载中"
                   element-loading-spinner="el-icon-loading"
                   element-loading-background="rgba(0, 0, 0, 0.8)">
             <el-table-column prop="produceUserName" label="申请人" width="250" align="center"/>
             <el-table-column prop="approvalTypeStr" label="申请类型" width="250" align="center"/>
+            <el-table-column prop="createTime" label="申请时间" width="250" align="center"/>
             <el-table-column prop="recordStatusStr" label="审批状态" width="250" align="center">
                 <template slot-scope="scope">
-                    <el-tag :type="scope.row.recordStatusStr === '待审批' ? 'primary' : 'success'"
+                    <el-tag :type="typeStyle(scope.row)"
                             disable-transitions>{{scope.row.recordStatusStr}}
                     </el-tag>
                 </template>
@@ -20,7 +21,7 @@
                 </template>
             </el-table-column>
         </el-table>
-        <div style="width: 850px">
+        <div style="width: 1100px">
             <el-pagination @size-change="sizeChange"
                            @current-change="currentChange"
                            :page-sizes="[10, 15, 20, 50]"
@@ -38,7 +39,7 @@
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false" size="small">取 消</el-button>
                 <el-button type="primary" @click="pass" size="small">审 批</el-button>
-                <el-button type="danger" @click="dialogVisible = false" size="small">驳 回</el-button>
+                <el-button type="danger" @click="notPass" size="small">驳 回</el-button>
             </span>
         </el-dialog>
     </div>
@@ -67,6 +68,23 @@
             this.initMyApprovals();
         },
         methods: {
+            typeStyle(row) {
+                if (row.recordStatusStr == '待审批') {
+                    return 'primary';
+                } else if (row.recordStatusStr == '已审批') {
+                    return 'success';
+                } else if (row.recordStatusStr == '审批驳回') {
+                    return 'danger';
+                }
+            },
+            notPass() {
+                postRequest("/staff/myApproval/notPass", this.editParam).then(resp => {
+                    if (resp) {
+                        this.initMyApprovals();
+                        this.dialogVisible = false;
+                    }
+                });
+            },
             pass() {
                 postRequest("/staff/myApproval/approvalPass", this.editParam).then(resp => {
                     if (resp) {
