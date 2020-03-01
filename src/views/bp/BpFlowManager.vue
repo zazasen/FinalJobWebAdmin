@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <el-table :data="depData" border stripe style="width: 80%;margin-top: 10px"
+            <el-table :data="depData" border stripe style="width: 100%;margin-top: 10px"
                       :default-expand-all="true"
                       row-key="id" :expand-row-keys="['1']"
                       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
@@ -11,10 +11,10 @@
                       element-loading-spinner="el-icon-loading"
                       element-loading-background="rgba(0, 0, 0, 0.8)">
                 <el-table-column prop="name" label="部门名"/>
-                <el-table-column prop="approvalFlowVo.firstApprovalManName" label="第一审批人"/>
-                <el-table-column prop="approvalFlowVo.secondApprovalManName" label="第二审批人"/>
-                <el-table-column prop="approvalFlowVo.thirdApprovalManName" label="第三审批人"/>
-                <el-table-column label="审批流设置">
+                <el-table-column prop="approvalFlowVo.firstApprovalManName" label="第一审批人" align="center"/>
+                <el-table-column prop="approvalFlowVo.secondApprovalManName" label="第二审批人" align="center"/>
+                <el-table-column prop="approvalFlowVo.thirdApprovalManName" label="第三审批人" align="center"/>
+                <el-table-column label="审批流设置" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" @click="flowButton(scope.row)">审批流设置</el-button>
                     </template>

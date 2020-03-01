@@ -1,14 +1,14 @@
 <template>
     <div>
-        <el-table :data="myApprovals" border style="width: 1100px"
+        <el-table :data="myApprovals" border style="width: 100%"
                   v-loading="loading"
                   element-loading-text="拼命加载中"
                   element-loading-spinner="el-icon-loading"
                   element-loading-background="rgba(0, 0, 0, 0.8)">
-            <el-table-column prop="produceUserName" label="申请人" width="250" align="center"/>
-            <el-table-column prop="approvalTypeStr" label="申请类型" width="250" align="center"/>
-            <el-table-column prop="createTime" label="申请时间" width="250" align="center"/>
-            <el-table-column prop="recordStatusStr" label="审批状态" width="250" align="center">
+            <el-table-column prop="produceUserName" label="申请人" align="center"/>
+            <el-table-column prop="approvalTypeStr" label="申请类型" align="center"/>
+            <el-table-column prop="createTime" label="申请时间" align="center"/>
+            <el-table-column prop="recordStatusStr" label="审批状态" align="center">
                 <template slot-scope="scope">
                     <el-tag :type="typeStyle(scope.row)"
                             disable-transitions>{{scope.row.recordStatusStr}}

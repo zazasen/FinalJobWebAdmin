@@ -4,7 +4,7 @@
             <el-button type="success" icon="el-icon-plus" @click="addButton">增加</el-button>
         </div>
         <div>
-            <el-table :data="depData" border stripe style="width: 80%;margin-top: 10px"
+            <el-table :data="depData" border stripe style="width: 100%;margin-top: 10px"
                       :default-expand-all="true"
                       row-key="id" :expand-row-keys="['1']"
                       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
@@ -14,7 +14,7 @@
                       element-loading-spinner="el-icon-loading"
                       element-loading-background="rgba(0, 0, 0, 0.8)">
                 <el-table-column prop="name" label="部门名"/>
-                <el-table-column prop="parentName" label="上级部门" width="250" align="center"/>
+                <el-table-column prop="parentName" label="上级部门" align="center"/>
                 <el-table-column prop="userRealName" label="部门主管" width="250" align="center"/>
                 <el-table-column label="操作" align="center">
                     <template slot-scope="scope">

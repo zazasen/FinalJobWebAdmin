@@ -161,7 +161,7 @@
             </el-table>
             <el-pagination @size-change="staffHandleSizeChange"
                            @current-change="staffHandleCurrentChange"
-                           :page-sizes="[5, 8, 10, 20]"
+                           :page-sizes="[10, 15, 20, 50]"
                            :page-size="pageSize"
                            layout="sizes, prev, pager, next, jumper, ->, total"
                            :total=total style="margin-top: 20px">
@@ -431,7 +431,7 @@
                 nations: [],
                 positions: [],
                 pageIndex: 1,
-                pageSize: 5,
+                pageSize: 10,
                 total: null,
                 defaultProps: {
                     children: 'children',

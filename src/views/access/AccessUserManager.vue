@@ -7,23 +7,23 @@
             <el-button type="success" @click="queryUserData">查询</el-button>
         </div>
         <div>
-            <el-table :data="queryData" stripe style="width: 1000px;margin-top: 10px"
+            <el-table :data="queryData" stripe style="width: 100%;margin-top: 10px"
                       :header-cell-style="{background:'#eef1f6',color:'#606266'}"
                       v-loading="loading"
                       element-loading-text="拼命加载中"
                       element-loading-spinner="el-icon-loading"
                       element-loading-background="rgba(0, 0, 0, 0.8)">
                 <el-table-column prop="id" label="id" width="50" align="center"/>
-                <el-table-column prop="realName" label="姓名" width="250" align="center"/>
+                <el-table-column prop="realName" label="姓名" align="center"/>
                 <el-table-column prop="workId" label="工号" width="100" align="center"/>
-                <el-table-column prop="username" label="登录账号" width="250" align="center"/>
-                <el-table-column prop="enabledStr" label="账号状态" width="100" align="center">
+                <el-table-column prop="username" label="登录账号" align="center"/>
+                <el-table-column prop="enabledStr" label="账号状态" align="center">
                     <template slot-scope="scope">
                         <el-tag :type="scope.row.enabled === true ? 'success' : 'danger'">{{scope.row.enabledStr}}
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="250" align="center">
+                <el-table-column label="操作" align="center">
                     <template slot-scope="scope">
                         <el-button @click="editAccount(scope.row)" type="text" size="small">账号操作</el-button>
                     </template>
@@ -31,7 +31,7 @@
             </el-table>
             <div style="width: 1000px">
                 <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                               :page-sizes="[5, 8, 10, 20]" :page-size="pageSize"
+                               :page-sizes="[10, 15, 20, 50]" :page-size="pageSize"
                                layout="sizes, prev, pager, next, jumper, ->, total"
                                :total=total style="margin-top: 20px">
                 </el-pagination>
@@ -81,7 +81,7 @@
                 },
                 roles: null,
                 pageIndex: 1,
-                pageSize: 5,
+                pageSize: 10,
                 queryData: null,
                 total: null,
                 loading: false,

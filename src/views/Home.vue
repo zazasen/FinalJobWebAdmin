@@ -2,9 +2,9 @@
     <div style="position: absolute;width:100%;height: 100%;">
         <el-container style="height: 100%">
             <el-header class="header">
-                <div class="title">
-                    <span>前端用户中心</span>
-                    <el-button style="margin-left: 60px;color: #FAFAFA;height: 100%;" type="text" :icon="butIcon"
+                <div class="title" :style="leftStyle">
+                    <span v-if="showTitle">前端用户中心</span>
+                    <el-button :style="butStyle" type="text" :icon="butIcon"
                                @click="isCollapseChange"/>
                 </div>
                 <el-dropdown @command="commandEvent">
@@ -21,7 +21,7 @@
                 </el-dropdown>
             </el-header>
             <el-container>
-                <el-aside width="200px" style="height: 100%">
+                <el-aside :width="leftWidth" style="height: 100%">
                     <el-menu router :default-active="this.$route.path" background-color="#F5F5F5" style="height: 100%"
                              :collapse="isCollapse">
                         <el-submenu :index="index+''" v-for="(route,index) in routes" :key="index">
@@ -63,9 +63,14 @@
                 user: JSON.parse(window.sessionStorage.getItem("currentUser")),
                 // routes:this.$router.options.routes
                 butIcon: "el-icon-s-fold",
+                // false 不收起，true 收起
                 isCollapse: false,
                 signType: null,
                 signShow: "签到",
+                leftWidth: 200 + 'px',
+                leftStyle: 'width: ' + 200 + 'px',
+                showTitle: true,
+                butStyle: 'margin-left:60px;color: #FAFAFA;height: 100%'
             }
         },
         computed: {
@@ -93,8 +98,16 @@
             isCollapseChange() {
                 if (this.isCollapse) {
                     this.butIcon = "el-icon-s-fold";
+                    this.showTitle = true;
+                    this.leftWidth = 200 + 'px';
+                    this.leftStyle = 'width: ' + 200 + 'px';
+                    this.butStyle = 'margin-left:60px;color: #FAFAFA;height: 100%';
                 } else {
                     this.butIcon = "el-icon-s-unfold";
+                    this.showTitle = false;
+                    this.leftWidth = 50 + 'px';
+                    this.leftStyle = 'width: ' + 50 + 'px';
+                    this.butStyle = 'color: #FAFAFA;height: 100%';
                 }
                 this.isCollapse = !this.isCollapse;
             },
@@ -146,7 +159,6 @@
         font-size: 20px;
         font-family: 华文楷体;
         color: white;
-        height: 100%;
     }
 
     .header {
