@@ -11,6 +11,7 @@
                       element-loading-spinner="el-icon-loading"
                       element-loading-background="rgba(0, 0, 0, 0.8)">
                 <el-table-column prop="name" label="部门名"/>
+                <el-table-column prop="userRealName" label="部门主管" align="center"/>
                 <el-table-column prop="approvalFlowVo.firstApprovalManName" label="第一审批人" align="center"/>
                 <el-table-column prop="approvalFlowVo.secondApprovalManName" label="第二审批人" align="center"/>
                 <el-table-column prop="approvalFlowVo.thirdApprovalManName" label="第三审批人" align="center"/>
@@ -22,25 +23,28 @@
             </el-table>
         </div>
         <el-dialog title="审批流管理" :visible.sync="dialogVisible" width="30%">
-            <div>
-                <label><span style="color: red;margin-right: 5px">*</span>第一审批人</label>
+            <div style="margin-left: 10px">
+                <label>第一审批人</label>
                 <el-select v-model="approvalFlowData.firstApprovalMan" placeholder="请选择"
+                           filterable :clearable="true"
                            style="width: 250px;margin-left: 10px;margin-top: 10px">
                     <el-option v-for="(item,index) in depStaff" :key="index" :label="item.realName"
                                :value="item.id"/>
                 </el-select>
             </div>
-            <div>
-                <label><span style="color: red;margin-right: 5px">*</span>第二审批人</label>
+            <div style="margin-left: 10px">
+                <label>第二审批人</label>
                 <el-select v-model="approvalFlowData.secondApprovalMan" placeholder="请选择"
+                           filterable :clearable="true"
                            style="width: 250px;margin-left: 10px;margin-top: 10px">
                     <el-option v-for="(item,index) in depStaff" :key="index" :label="item.realName"
                                :value="item.id"/>
                 </el-select>
             </div>
-            <div>
-                <label><span style="color: red;margin-right: 5px">*</span>第三审批人</label>
+            <div style="margin-left: 10px">
+                <label>第三审批人</label>
                 <el-select v-model="approvalFlowData.thirdApprovalMan" placeholder="请选择"
+                           filterable :clearable="true"
                            style="width: 250px;margin-left: 10px;margin-top: 10px">
                     <el-option v-for="(item,index) in depStaff" :key="index" :label="item.realName"
                                :value="item.id"/>
@@ -79,8 +83,12 @@
         },
         methods: {
             defineChange() {
-                postRequest("/bp/flow/changeApprovalFlow", this.approvalFlowData);
-                this.dialogVisible = false;
+                postRequest("/bp/flow/changeApprovalFlow", this.approvalFlowData).then(resp => {
+                    if (resp) {
+                        this.getDepTree();
+                        this.dialogVisible = false;
+                    }
+                });
             },
             flowButton(data) {
                 this.approvalFlowData = {};
