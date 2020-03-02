@@ -71,7 +71,7 @@
                                   size="mini"/>
                     </el-col>
                 </el-row>
-                <el-row :gutter="10" style="margin-top: 10px">
+                <el-row  style="margin-top: 10px">
                     <el-col :span="8">
                         <div>
                             <span style="font-size: 14px">入职日期</span>
