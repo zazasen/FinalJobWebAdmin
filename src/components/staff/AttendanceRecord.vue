@@ -6,6 +6,7 @@
                             end-placeholder="结束日期" value-format="timestamp"/>
             <el-button style="margin-left: 10px" @click="initRecord">查询</el-button>
         </div>
+
         <div style="margin-top: 10px">
             <el-table :data="attendanceRecord" border style="width: 100%;margin-bottom: 10px"
                       v-loading="loading"
@@ -71,7 +72,7 @@
     import {postRequest} from "../../utils/RequestUtil";
 
     export default {
-        name: "AttendanceRecordManager",
+        name: "AttendanceRecord",
         data() {
             return {
                 updateData: {
@@ -107,8 +108,11 @@
                     return;
                 }
                 this.updateData.startTime = this.updateData.startTime.getTime();
-                postRequest("/attendance/record/remedySign", this.updateData);
-                this.dialogVisible = false;
+                postRequest("/staff/myAttendance/remedySign", this.updateData).then(resp => {
+                    if (resp) {
+                        this.dialogVisible = false;
+                    }
+                });
             },
             endApply() {
                 this.updateData.startTime = null;
@@ -119,8 +123,9 @@
                     return;
                 }
                 this.updateData.endTime = this.updateData.endTime.getTime();
-                postRequest("/attendance/record/remedySign", this.updateData);
-                this.dialogVisible = false;
+                postRequest("/staff/myAttendance/remedySign", this.updateData).then(resp => {
+                    this.dialogVisible = false;
+                });
             },
             startFocus() {
                 this.updateData.startTime = new Date(this.tempDate);
@@ -167,7 +172,7 @@
                     this.queryForm.startTime = "";
                     this.queryForm.endTime = "";
                 }
-                postRequest("/attendance/record/getAttendanceRecord", this.queryForm).then(resp => {
+                postRequest("/staff/myAttendance/getAttendanceRecord", this.queryForm).then(resp => {
                     if (resp) {
                         this.loading = false;
                         this.total = resp.total;
@@ -179,6 +184,6 @@
     }
 </script>
 
-<style>
+<style scoped>
 
 </style>

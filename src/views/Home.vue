@@ -83,7 +83,7 @@
         },
         methods: {
             getSignType() {
-                getRequest("/attendance/sign/signType").then(resp => {
+                getRequest("/staff/myAttendance/signType").then(resp => {
                     if (resp) {
                         this.signType = resp.data.type;
                         if (this.signType == 1) {
@@ -134,7 +134,7 @@
                 }
                 if (param == 'signIn') {
                     if (this.signType == 0) {
-                        postRequest("/attendance/sign/signIn").then(resp => {
+                        postRequest("/staff/myAttendance/signIn").then(resp => {
                             if (resp) {
                                 this.getSignType();
                             }
@@ -142,7 +142,7 @@
 
                     }
                     if (this.signType == 1) {
-                        postRequest("/attendance/sign/signOut").then(resp => {
+                        postRequest("/staff/myAttendance/signOut").then(resp => {
                             if (resp) {
                                 this.getSignType();
                             }
