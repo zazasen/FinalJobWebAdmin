@@ -1,9 +1,29 @@
 <template>
     <div>
         <div>
-            <el-button @click="leaveApply" type="info" style="border-radius: 0px;width: 100px">请假</el-button>
+            <el-button style="border-radius: 0px" @click="overtimeApply">加班申请</el-button>
+            <el-button @click="leaveApply" type="primary" style="border-radius: 0px">请假申请</el-button>
         </div>
-        <el-dialog title="申请单填写" :visible.sync="dialogVisible" width="40%">
+
+        <el-dialog title="加班申请" :visible.sync="overtimeDialogVisible" width="40%">
+            <div>
+                <label style="margin-right: 20px;margin-left: 20px">加班时间</label>
+                <el-date-picker v-model="overtimeForm.dateRange" type="daterange" range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期" value-format="timestamp">
+                </el-date-picker>
+            </div>
+            <div>
+                <label style="margin-right: 20px;margin-left: 20px;">加班原因</label>
+                <el-input type="textarea" v-model="overtimeForm.reason" style="width: 350px;margin-top: 10px"/>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="overtimeDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="overtimeDefine">确 定</el-button>
+            </span>
+        </el-dialog>
+
+        <el-dialog title="请假申请" :visible.sync="dialogVisible" width="40%">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
                 <el-form-item label="假期类型" prop="holidayType">
                     <el-select v-model="ruleForm.holidayType" placeholder="请选择假期类型" style="width: 350px">
@@ -37,6 +57,7 @@
         name: "ApplyCenterComponent",
         data() {
             return {
+                overtimeDialogVisible: false,
                 dialogVisible: false,
                 options: [{
                     value: '0',
@@ -75,6 +96,12 @@
                         {required: true, message: '请填写请假原因', trigger: 'blur'}
                     ]
                 },
+                overtimeForm: {
+                    dateRange: [],
+                    startTime: null,
+                    endTime: null,
+                    reason: null
+                }
             }
         },
         methods: {
@@ -82,13 +109,35 @@
                 this.ruleForm = {};
                 this.dialogVisible = true;
             },
+            overtimeApply() {
+                this.overtimeForm = {};
+                this.overtimeDialogVisible = true;
+            },
+            overtimeDefine() {
+                if (!this.overtimeForm.dateRange) {
+                    this.$message.error("请选择加班时间范围");
+                    return;
+                }
+                if (!this.overtimeForm.reason) {
+                    this.$message.error("请添加加班事由");
+                    return;
+                }
+                this.overtimeForm.startTime = this.overtimeForm.dateRange[0];
+                this.overtimeForm.endTime = this.overtimeForm.dateRange[1];
+                this.overtimeForm.dateRange = null;
+                // todo
+                postRequest("/staff/myRecord/overtimeApply",this.overtimeForm).then(resp=>{
+
+                });
+                this.overtimeDialogVisible = false;
+            },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.ruleForm.beginTime = this.ruleForm.dateRange[0];
                         this.ruleForm.endTime = this.ruleForm.dateRange[1];
                         this.ruleForm.dateRange = null;
-                        postRequest("/staff/myHoliday/leaveApply", this.ruleForm).then(resp => {
+                        postRequest("/staff/myRecord/leaveApply", this.ruleForm).then(resp => {
                             if (resp) {
                                 this.$refs[formName].resetFields();
                                 this.dialogVisible = false;
