@@ -44,9 +44,7 @@
                         <el-breadcrumb-item>{{this.$router.currentRoute.name}}</el-breadcrumb-item>
                     </el-breadcrumb>
                     <router-view style="margin-top: 15px"/>
-                    <div class="homePage" v-if="breadItem()">
-                        这是一个大大的主页
-                    </div>
+                    <HomeComponent v-if="breadItem()"></HomeComponent>
                 </el-main>
             </el-container>
         </el-container>
@@ -55,6 +53,7 @@
 
 <script>
     import {getRequest, postRequest} from "../utils/RequestUtil";
+    import HomeComponent from "../components/HomeComponent";
 
     export default {
         name: "Home",
@@ -72,6 +71,9 @@
                 showTitle: true,
                 butStyle: 'margin-left:60px;color: #FAFAFA;height: 100%'
             }
+        },
+        components: {
+            HomeComponent: HomeComponent,
         },
         computed: {
             routes() {

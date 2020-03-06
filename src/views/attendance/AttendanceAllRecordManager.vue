@@ -22,6 +22,7 @@
                 <el-table-column prop="endTypeStr" label="下班签到类型" width="150" align="center"/>
                 <el-table-column prop="signTypeStr" label="打卡状态" width="150" align="center"/>
                 <el-table-column prop="workHoursStr" label="上班时长" width="150" align="center"/>
+                <el-table-column prop="createTime" label="日期" width="250" align="center"/>
             </el-table>
             <el-pagination @size-change="sizeChange"
                            @current-change="currentChange"
