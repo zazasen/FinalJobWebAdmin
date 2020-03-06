@@ -4,7 +4,11 @@
             <el-button type="primary" @click="showAddAccountSetDialog">添加账套</el-button>
         </div>
         <div>
-            <el-table :data="accountSetData" style="width: 100%" size="small">
+            <el-table :data="accountSetData" style="width: 100%" size="small"
+                      v-loading="loading"
+                      element-loading-text="拼命加载中"
+                      element-loading-spinner="el-icon-loading"
+                      element-loading-background="rgba(0, 0, 0, 0.8)">
                 <el-table-column prop="accountName" label="账套名称" width="150" align="center"
                                  fixed="left"></el-table-column>
                 <el-table-column prop="basicSalary" label="基本工资" width="100" align="center"></el-table-column>
@@ -331,6 +335,7 @@
         name: "SalaryAccountSet",
         data() {
             return {
+                loading:false,
                 editDialogVisible: false,
                 dialogVisible: false,
                 accountSetData: null,
@@ -503,8 +508,10 @@
                 this.initAccountSetData();
             },
             initAccountSetData() {
+                this.loading = true;
                 postRequest("/salary/accountSet/queryAccountSet", this.queryFrom).then(resp => {
                     if (resp) {
+                        this.loading = false;
                         this.accountSetData = resp.data;
                         this.total = resp.total;
                     }
