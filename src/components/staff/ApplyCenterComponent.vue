@@ -77,6 +77,9 @@
                 }, {
                     value: '5',
                     label: '丧假'
+                }, {
+                    value: '6',
+                    label: '事假'
                 }],
                 ruleForm: {
                     holidayType: null,
