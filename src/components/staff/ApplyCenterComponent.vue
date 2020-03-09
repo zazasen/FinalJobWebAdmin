@@ -3,6 +3,7 @@
         <div>
             <el-button style="border-radius: 0px" @click="overtimeApply">加班申请</el-button>
             <el-button @click="leaveApply" type="primary" style="border-radius: 0px">请假申请</el-button>
+            <el-button @click="quitJobApply" type="danger" style="border-radius: 0px">离职申请</el-button>
         </div>
 
         <el-dialog title="加班申请" :visible.sync="overtimeDialogVisible" width="40%">
@@ -22,6 +23,26 @@
                 <el-button type="primary" @click="overtimeDefine">确 定</el-button>
             </span>
         </el-dialog>
+
+        <el-dialog title="离职申请" :visible.sync="QuitJobDialogVisible" width="40%">
+            <div>
+                <label style="margin-right: 20px;margin-left: 20px;">离职时间</label>
+                <el-date-picker v-model="quitJobForm.leaveTime" type="date" placeholder="选择日期"
+                                value-format="timestamp"
+                                style="width: 350px;margin-top: 10px"/>
+            </div>
+
+            <div>
+                <label style="margin-right: 20px;margin-left: 20px;">离职原因</label>
+                <el-input type="textarea" v-model="quitJobForm.reason" style="width: 350px;margin-top: 10px"/>
+            </div>
+
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="QuitJobDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="quitJobDefine">确 定</el-button>
+            </span>
+        </el-dialog>
+
 
         <el-dialog title="请假申请" :visible.sync="dialogVisible" width="40%">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
@@ -59,6 +80,7 @@
             return {
                 overtimeDialogVisible: false,
                 dialogVisible: false,
+                QuitJobDialogVisible: false,
                 options: [{
                     value: '0',
                     label: '调休'
@@ -104,6 +126,10 @@
                     startTime: null,
                     endTime: null,
                     reason: null
+                },
+                quitJobForm: {
+                    leaveTime: null,
+                    reason: null,
                 }
             }
         },
@@ -116,6 +142,26 @@
                 this.overtimeForm = {};
                 this.overtimeDialogVisible = true;
             },
+            quitJobApply() {
+                this.quitJobForm = {};
+                this.QuitJobDialogVisible = true;
+            },
+            quitJobDefine() {
+                if(!this.quitJobForm.leaveTime){
+                    this.$message.error("请输入离职时间");
+                    return;
+                }
+                if (!this.quitJobForm.reason) {
+                    this.$message.error("请输入离职原因");
+                    return;
+                }
+                postRequest("/staff/myRecord/quitJobApply", this.quitJobForm).then(resp => {
+                    if (resp) {
+                        this.QuitJobDialogVisible = false;
+                    }
+                });
+            },
+
             overtimeDefine() {
                 if (!this.overtimeForm.dateRange) {
                     this.$message.error("请选择加班时间范围");
@@ -129,7 +175,7 @@
                 this.overtimeForm.endTime = this.overtimeForm.dateRange[1];
                 this.overtimeForm.dateRange = null;
                 // todo
-                postRequest("/staff/myRecord/overtimeApply",this.overtimeForm).then(resp=>{
+                postRequest("/staff/myRecord/overtimeApply", this.overtimeForm).then(resp => {
 
                 });
                 this.overtimeDialogVisible = false;
