@@ -27,6 +27,36 @@
             </el-card>
             <el-card style="margin:10px 0px 10px 10px" shadow="never">
                 <div slot="header">
+                    <span>异常考勤</span>
+                </div>
+                <div>
+                    <div class="c1">
+                        <div style="margin-left: 20px">
+                            <div style="margin-bottom: 5px">{{early}}</div>
+                            <div><i class="fa fa-circle" style="margin-right: 15px;color: #1E90FF"/>早退（天）</div>
+                        </div>
+                        <div style="margin-right: 20px">
+                            <div style="margin-bottom: 5px">{{late}}</div>
+                            <div><i class="fa fa-circle" style="margin-right: 15px;color: #EE3B3B"/>迟到（天）</div>
+                        </div>
+                    </div>
+
+                    <div class="c1">
+                        <div>
+                            <div style="margin-bottom: 5px">{{worked}}</div>
+                            <div><i class="fa fa-circle" style="margin-right: 15px;color: #00FA9A"/>已工作工时（时）</div>
+                        </div>
+                        <div>
+                            <div style="margin-bottom: 5px">{{needDay}}</div>
+                            <div><i class="fa fa-circle" style="margin-right: 15px;color: #9400D3"/>总需工时（时）</div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </el-card>
+            <el-card style="margin:10px 0px 10px 10px" shadow="never">
+                <div slot="header">
                     <span>本月请假信息</span>
                 </div>
                 <div v-for="(item,index) in leaveInfo" :key="index">
@@ -52,7 +82,12 @@
                 days: null,
                 already: null,
                 none: null,
+                needDay: null,
+                early: null,
+                late: null,
+                worked: null,
                 leaveInfo: [],
+                exceptionCheckIn: [],
             }
         },
         components: {
@@ -61,6 +96,7 @@
         mounted() {
             this.getDays();
             this.getLeaveInfo();
+            this.initExceptionCheckIn();
         },
         methods: {
             getLeaveInfo() {
@@ -98,6 +134,22 @@
                             color: ["#4876FF", "#7A7A7A", "#FF3030", "#EEB422"]
                         }
                     ]
+                })
+            },
+            initExceptionCheckIn() {
+                postRequest("/home/getExceptionCheckIn").then(resp => {
+                    this.exceptionCheckIn = resp.data;
+                    for (let i in this.exceptionCheckIn) {
+                        if (this.exceptionCheckIn[i].name === '早退') {
+                            this.early = this.exceptionCheckIn[i].value;
+                        } else if (this.exceptionCheckIn[i].name === '迟到') {
+                            this.late = this.exceptionCheckIn[i].value;
+                        } else if (this.exceptionCheckIn[i].name === '已工作工时') {
+                            this.worked = this.exceptionCheckIn[i].value;
+                        } else if (this.exceptionCheckIn[i].name === '总工时') {
+                            this.needDay = this.exceptionCheckIn[i].value;
+                        }
+                    }
                 })
             },
             getDays() {

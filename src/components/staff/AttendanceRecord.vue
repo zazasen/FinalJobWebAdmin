@@ -13,7 +13,6 @@
                       element-loading-text="拼命加载中"
                       element-loading-spinner="el-icon-loading"
                       element-loading-background="rgba(0, 0, 0, 0.8)">
-                <el-table-column prop="id" label="id" width="100" align="center"/>
                 <el-table-column prop="createTime" label="日期" width="250" align="center"/>
                 <el-table-column prop="startTime" label="上班签到时间" width="250" align="center"/>
                 <el-table-column prop="startPlace" label="上班签到地址" width="200" align="center"/>
