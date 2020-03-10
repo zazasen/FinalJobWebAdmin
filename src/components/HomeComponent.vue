@@ -28,6 +28,13 @@
             <el-card style="margin:10px 0px 10px 10px" shadow="never">
                 <div slot="header">
                     <span>异常考勤</span>
+                    <el-tooltip effect="dark" placement="top">
+                        <div slot="content">
+                            现有工时:有打卡的日期的出勤汇总<br/>
+                            总需工时:有打卡的日期的最少需要工作的时长
+                        </div>
+                        <i class="fa fa-lightbulb-o" style="margin-top: 10px;margin-left: 10px"></i>
+                    </el-tooltip>
                 </div>
                 <div>
                     <div class="c1">
@@ -44,10 +51,10 @@
                     <div class="c1">
                         <div>
                             <div style="margin-bottom: 5px">{{worked}}</div>
-                            <div><i class="fa fa-circle" style="margin-right: 15px;color: #00FA9A"/>已工作工时（时）</div>
+                            <div><i class="fa fa-circle" style="margin-right: 15px;color: #00FA9A"/>现有工时（时）</div>
                         </div>
                         <div>
-                            <div style="margin-bottom: 5px">{{needDay}}</div>
+                            <div style="margin-bottom: 5px">{{already * 8}}</div>
                             <div><i class="fa fa-circle" style="margin-right: 15px;color: #9400D3"/>总需工时（时）</div>
                         </div>
                     </div>
