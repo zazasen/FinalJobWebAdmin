@@ -87,6 +87,8 @@
                                 } else {
                                     this.$router.replace(path);
                                 }
+                            }else {
+                                this.loading = false;
                             }
                         });
                     } else {

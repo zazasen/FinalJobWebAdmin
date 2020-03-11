@@ -1,6 +1,6 @@
 <template>
     <div class="border" style="display: flex;justify-content: space-between">
-        <div style="width: 30%">
+        <div style="width: 33%">
             <el-card style="margin:10px 0px 10px 10px" shadow="never">
                 <div slot="header">
                     <span>出勤统计</span>
@@ -72,7 +72,7 @@
                 </div>
             </el-card>
         </div>
-        <div class="border" style="margin:10px 10px 10px 10px;width: 70%">
+        <div class="border" style="margin:10px 10px 10px 10px;width: 67%">
             <AttendanceCalendar/>
         </div>
     </div>

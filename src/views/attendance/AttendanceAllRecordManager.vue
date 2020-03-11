@@ -12,17 +12,16 @@
                       element-loading-text="拼命加载中"
                       element-loading-spinner="el-icon-loading"
                       element-loading-background="rgba(0, 0, 0, 0.8)">
-                <el-table-column prop="id" label="id" width="100" align="center"/>
-                <el-table-column prop="username" label="员工姓名" width="200" align="center"/>
-                <el-table-column prop="startTime" label="上班签到时间" width="250" align="center"/>
+                <el-table-column prop="username" label="员工姓名" width="100" align="center" fixed="left"/>
+                <el-table-column prop="startTime" label="上班签到时间" width="200" align="center"/>
                 <el-table-column prop="startPlace" label="上班签到地址" width="200" align="center"/>
                 <el-table-column prop="startTypeStr" label="上班签到类型" width="150" align="center"/>
                 <el-table-column prop="endTime" label="下班签到时间" width="250" align="center"/>
                 <el-table-column prop="endPlace" label="下班签到地址" width="200" align="center"/>
                 <el-table-column prop="endTypeStr" label="下班签到类型" width="150" align="center"/>
-                <el-table-column prop="signTypeStr" label="打卡状态" width="150" align="center"/>
-                <el-table-column prop="workHoursStr" label="上班时长" width="150" align="center"/>
-                <el-table-column prop="createTime" label="日期" width="250" align="center"/>
+                <el-table-column prop="signTypeStr" label="打卡状态" width="100" align="center"/>
+                <el-table-column prop="workHoursStr" label="上班时长" width="100" align="center"/>
+                <el-table-column prop="createTime" label="日期" width="100" align="center" fixed="right"/>
             </el-table>
             <el-pagination @size-change="sizeChange"
                            @current-change="currentChange"
