@@ -52,7 +52,7 @@
                 },
                 circleUrl: 'https://cn.neworld.date/theme/material/images/users/avatar-001.jpg',
                 checked: false,
-                loading:false,
+                loading: false,
                 rules: {
                     username: [
                         {required: true, message: '请输入账号', trigger: 'blur'}
@@ -75,6 +75,7 @@
                             if (resp) {
                                 this.loading = false;
                                 let face = resp.data.userFace;
+                                this.$store.commit('INIT_CURRENT_USER', resp.data);
                                 window.sessionStorage.setItem("currentUser", JSON.stringify(resp.data));
                                 if (this.checked == true) {
                                     this.setCookie(this.ruleForm.username, this.ruleForm.password, face, 7);
@@ -87,7 +88,7 @@
                                 } else {
                                     this.$router.replace(path);
                                 }
-                            }else {
+                            } else {
                                 this.loading = false;
                             }
                         });
@@ -120,7 +121,7 @@
                         } else if (arr2[0] == 'userFace') {
                             let face = "";
                             for (let j = 1; j < arr2.length; j++) {
-                                face += arr2[j]+"=";
+                                face += arr2[j] + "=";
                             }
                             face = face.substring(0, face.length - 1);
                             this.circleUrl = face;

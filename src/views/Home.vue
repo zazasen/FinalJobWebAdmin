@@ -7,18 +7,26 @@
                     <el-button :style="butStyle" type="text" :icon="butIcon"
                                @click="isCollapseChange"/>
                 </div>
-                <el-dropdown @command="commandEvent">
-                  <span class="el-dropdown-link">
-                      <i><img :src="user.userFace" class="userFace"></i>
-                    {{user.username}}<i class="el-icon-arrow-down el-icon--right"></i>
-                  </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <!--                        <el-dropdown-item command="userCenter">用户中心</el-dropdown-item>-->
-                        <el-dropdown-item command="signIn">{{signShow}}</el-dropdown-item>
-                        <!--                        <el-dropdown-item command="setting">设置</el-dropdown-item>-->
-                        <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                <div style="display: flex;justify-content: space-between">
+                    <div>
+                        <el-button icon="el-icon-message-solid" @click="toChat"
+                                   style="color:white;margin-right: 20px;margin-top: 8px" type="text"></el-button>
+                    </div>
+                    <div>
+                        <el-dropdown @command="commandEvent">
+                      <span class="el-dropdown-link">
+                          <i><img :src="user.userFace" class="userFace"></i>
+                        {{user.username}}<i class="el-icon-arrow-down el-icon--right"></i>
+                      </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <!--                        <el-dropdown-item command="userCenter">用户中心</el-dropdown-item>-->
+                                <el-dropdown-item command="signIn">{{signShow}}</el-dropdown-item>
+                                <!--                        <el-dropdown-item command="setting">设置</el-dropdown-item>-->
+                                <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
+                </div>
             </el-header>
             <el-container>
                 <el-aside :width="leftWidth" style="height: 100%">
@@ -84,6 +92,9 @@
             this.getSignType();
         },
         methods: {
+            toChat() {
+                this.$router.push('/chat')
+            },
             getSignType() {
                 getRequest("/staff/myAttendance/signType").then(resp => {
                     if (resp) {
