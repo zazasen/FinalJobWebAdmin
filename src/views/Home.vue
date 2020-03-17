@@ -93,7 +93,9 @@
         },
         methods: {
             toChat() {
-                this.$router.push('/chat')
+                // this.$router.push('/chat')
+                let routeUrl = this.$router.resolve({ path: "/chat"});
+                window.open(routeUrl.href, '_blank');
             },
             getSignType() {
                 getRequest("/staff/myAttendance/signType").then(resp => {

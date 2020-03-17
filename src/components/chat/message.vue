@@ -5,7 +5,7 @@
                 <p class="time">
                     <span>{{entry.date | time}}</span>
                 </p>
-<!--                是否是自己的样式-->
+                <!--                是否是自己的样式-->
                 <div class="main" :class="{self:entry.self}">
                     <img class="avatar" :src="entry.self ? user.userFace : currentSession.userFace" alt="">
                     <p class="text">{{entry.content}}</p>

@@ -17,7 +17,7 @@ const store = new Vuex.Store({
         // 选中用户
         currentSession: null,
         currentUser: JSON.parse(window.sessionStorage.getItem("currentUser")),
-        filterKey1: '',
+        filterKey: '',
         stomp: null,
         isDot: {}
     },

@@ -134,11 +134,12 @@
         name: "SalaryHandle",
         data() {
             return {
+                dialogVisible: false,
                 inputForm: {
                     money: null,
                     reason: null,
                     userId: null,
-                    createTime:'',
+                    createTime: '',
                 },
                 calLoading: false,
                 salaryData: null,
