@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from "../views/Login";
 import Home from "../views/Home";
 import Chat from "../views/chat/Chat";
+import RecruitBoardDetail from "../views/recruit/RecruitBoardDetail";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
         path: '/chat',
         name: '在线聊天',
         component: Chat,
+        show: true,
+    },{
+        path: '/recruitBoardDetail',
+        name: '岗位详情页',
+        component: RecruitBoardDetail,
         show: true,
     },
 ];

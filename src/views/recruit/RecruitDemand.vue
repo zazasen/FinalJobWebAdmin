@@ -167,6 +167,18 @@
                                 <el-input style="width: 400px" size="small" v-model="inputForm.skill"></el-input>
                             </el-col>
                         </el-row>
+                        <el-row style="margin-top: 20px">
+                            <el-col :span="12">
+                                <span style="margin-right: 55px;font-size: 12px">工作经历</span>
+                                <el-input style="width: 400px" size="small"
+                                          v-model="inputForm.experience"></el-input>
+                            </el-col>
+                            <el-col :span="12">
+                                <span style="margin-right: 35px;font-size: 12px">试用期（月）</span>
+                                <el-input-number v-model="inputForm.probationPeriod"
+                                                 style="width: 400px" size="small" :min="1"></el-input-number>
+                            </el-col>
+                        </el-row>
                     </div>
                 </div>
             </div>
@@ -206,6 +218,8 @@
                     foreignLanguages: '',
                     skill: '',
                     address: '',
+                    experience: '',
+                    probationPeriod: '',
                 },
                 depData: [],
                 defaultProps: {
@@ -326,6 +340,7 @@
                     this.$message.error("年龄上限不能小于18岁");
                     return;
                 }
+                this.inputForm.responsibility = this.inputForm.responsibility.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, '&nbsp;')
                 postRequest("/recruit/demand/submitStaffNeed", this.inputForm).then(resp => {
                     if (resp) {
 
