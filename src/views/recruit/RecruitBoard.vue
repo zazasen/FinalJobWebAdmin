@@ -29,10 +29,16 @@
                 <el-table-column prop="positionName" label="申请职位" align="center"></el-table-column>
                 <el-table-column prop="needNumber" label="招聘人数" width="100" align="center"></el-table-column>
                 <el-table-column prop="degreeStr" label="最低学历" align="center" width="100"></el-table-column>
+                <el-table-column prop="degreeStr" label="发布状态" align="center" width="100">
+                    <template slot-scope="scope">
+                        <el-tag :type="typeDemo(scope.row.publish)"
+                                disable-transitions>{{scope.row.publishStr}}</el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column fixed="right" label="操作" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" size="small" @click="showDetail(scope.row)">详情</el-button>
-                        <el-button type="text" size="small">编辑</el-button>
+                        <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
                         <el-button type="text" size="small" style="color: red">删除</el-button>
                     </template>
                 </el-table-column>
@@ -45,6 +51,28 @@
                            :total=total style="margin-top: 20px">
             </el-pagination>
         </div>
+        <el-dialog title="招聘管理" :visible.sync="dialogVisible" width="30%">
+            <div>
+                <div>
+                    <span style="margin-right: 20px">薪资上限</span>
+                    <el-input type="number" step="0.01" v-model="editForm.salaryTop" style="width: 250px"
+                              autocomplete="off"></el-input>
+                </div>
+                <div style="margin-top: 20px">
+                    <span style="margin-right: 20px">薪资下限</span>
+                    <el-input type="number" step="0.01" v-model="editForm.salaryLow" style="width: 250px"
+                              autocomplete="off"></el-input>
+                </div>
+                <div style="margin-top: 20px">
+                    <el-radio v-model="editForm.publish" label="1">发布</el-radio>
+                    <el-radio v-model="editForm.publish" label="2">招聘完成</el-radio>
+                </div>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="define" size="small">确定</el-button>
+                <el-button @click="dialogVisible = false" size="small">取消</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -55,6 +83,13 @@
         name: "RecruitBoard",
         data() {
             return {
+                editForm: {
+                    id: '',
+                    salaryTop: '',
+                    salaryLow: '',
+                    publish: '',
+                },
+                dialogVisible: false,
                 loading: false,
                 staffNeedsDate: null,
                 total: null,
@@ -77,6 +112,32 @@
             this.initStaffNeedsDate();
         },
         methods: {
+            typeDemo(val){
+                if(val == 0){
+                    return "danger";
+                }
+                if(val == 1){
+                    return "success";
+                }
+                if(val == 2){
+                    return "primary";
+                }
+            },
+            define() {
+                postRequest("/recruit/board/editStaffNeeds", this.editForm).then(resp => {
+                    if (resp) {
+                        this.initStaffNeedsDate();
+                        this.dialogVisible = false;
+                    }
+                })
+            },
+            edit(row) {
+                this.dialogVisible = true;
+                this.editForm.id = row.id;
+                this.editForm.salaryTop = row.salaryTop;
+                this.editForm.salaryLow = row.salaryLow;
+                this.editForm.publish = row.publish;
+            },
             showDetail(row) {
                 window.sessionStorage.setItem("recruitBoardDetailId", row.id);
                 let routeUrl = this.$router.resolve({path: "/recruitBoardDetail"});

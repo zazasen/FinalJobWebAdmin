@@ -22,6 +22,7 @@
                                 <!--                        <el-dropdown-item command="userCenter">用户中心</el-dropdown-item>-->
                                 <el-dropdown-item command="signIn">{{signShow}}</el-dropdown-item>
                                 <!--                        <el-dropdown-item command="setting">设置</el-dropdown-item>-->
+                                <el-dropdown-item command="recruitPublish">招聘页面</el-dropdown-item>
                                 <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
@@ -163,6 +164,10 @@
                             }
                         })
                     }
+                }
+                if(param == 'recruitPublish'){
+                    let routeUrl = this.$router.resolve({path: "/recruitPublish"});
+                    window.open(routeUrl.href, '_blank');
                 }
             }
         }
