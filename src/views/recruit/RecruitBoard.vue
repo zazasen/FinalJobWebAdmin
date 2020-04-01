@@ -1,3 +1,4 @@
+<!--招聘看板-->
 <template>
     <div>
         <div>
@@ -14,6 +15,11 @@
                     <span style="color: #C0C0C0">{{queryDepartmentName}}</span>
                 </el-button>
             </el-popover>
+            <el-select v-model="queryForm.publish" placeholder="请选择" style="margin-left: 10px" clearable>
+                <el-option v-for="item in publish" :key="item.value" :label="item.label"
+                           :value="item.value"></el-option>
+            </el-select>
+            <el-button style="margin-left: 10px" type="primary" @click="queryMethod">查询</el-button>
         </div>
         <div>
             <el-table :data="staffNeedsDate" style="width: 100%;margin-top: 10px" border stripe
@@ -32,7 +38,8 @@
                 <el-table-column prop="degreeStr" label="发布状态" align="center" width="100">
                     <template slot-scope="scope">
                         <el-tag :type="typeDemo(scope.row.publish)"
-                                disable-transitions>{{scope.row.publishStr}}</el-tag>
+                                disable-transitions>{{scope.row.publishStr}}
+                        </el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column fixed="right" label="操作" align="center">
@@ -83,6 +90,16 @@
         name: "RecruitBoard",
         data() {
             return {
+                publish: [{
+                    value: '0',
+                    label: '未发布'
+                }, {
+                    value: '1',
+                    label: '已发布'
+                }, {
+                    value: '2',
+                    label: '招聘完成'
+                }],
                 editForm: {
                     id: '',
                     salaryTop: '',
@@ -95,6 +112,7 @@
                 total: null,
                 queryForm: {
                     departmentId: '',
+                    publish: '',
                     pageIndex: 1,
                     pageSize: 10,
                 },
@@ -112,14 +130,17 @@
             this.initStaffNeedsDate();
         },
         methods: {
-            typeDemo(val){
-                if(val == 0){
+            queryMethod() {
+                this.initStaffNeedsDate();
+            },
+            typeDemo(val) {
+                if (val == 0) {
                     return "danger";
                 }
-                if(val == 1){
+                if (val == 1) {
                     return "success";
                 }
-                if(val == 2){
+                if (val == 2) {
                     return "primary";
                 }
             },
@@ -170,6 +191,7 @@
                 postRequest("/recruit/board/getStaffNeedsDate", this.queryForm).then(resp => {
                     if (resp) {
                         this.staffNeedsDate = resp.data;
+                        this.total = resp.total;
                         this.loading = false;
                     } else {
                         this.loading = false;

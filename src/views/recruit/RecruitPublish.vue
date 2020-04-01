@@ -1,3 +1,4 @@
+<!--所有发布岗位列表页面-->
 <template>
     <el-container class="main" style="position: absolute;width:100%;height: 100%;">
         <el-header class="head" style="height: 100px;margin-top: 20px">

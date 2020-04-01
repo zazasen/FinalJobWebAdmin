@@ -6,6 +6,7 @@ import Chat from "../views/chat/Chat";
 import RecruitBoardDetail from "../views/recruit/RecruitBoardDetail";
 import RecruitPublish from "../views/recruit/RecruitPublish";
 import ShowDetail from "../views/recruit/ShowDetail";
+import InputResume from "../views/recruit/InputResume";
 
 Vue.use(VueRouter);
 
@@ -39,6 +40,11 @@ const routes = [
         path: '/showDetail',
         name: '对外招聘详情页',
         component: ShowDetail,
+        show: true,
+    },{
+        path: '/inputResume',
+        name: '投递简历页面',
+        component: InputResume,
         show: true,
     },
 ];

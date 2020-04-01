@@ -1,3 +1,4 @@
+<!--岗位详情页面-->
 <template>
     <el-container class="main" style="position: absolute;width:100%;height: 100%;">
         <el-header class="head" style="height: 100px;margin-top: 20px">
@@ -30,7 +31,7 @@
                         <div v-html="detailData.responsibility"></div>
                     </div>
                     <div style="text-align: center">
-                        <el-button style="margin-right: 40px;margin-top: 20px;width: 300px" type="primary" round>投递</el-button>
+                        <el-button style="margin-right: 40px;margin-top: 20px;width: 300px" type="primary" round @click="intoInput">投递</el-button>
                     </div>
                 </div>
             </el-card>
@@ -45,13 +46,17 @@
         name: "ShowDetail",
         data() {
             return {
-                detailData: null,
+                detailData: {},
             }
         },
         mounted(){
             this.initDate();
         },
         methods: {
+            intoInput(){
+                let routeUrl = this.$router.resolve({path: "/inputResume"});
+                window.open(routeUrl.href, '_blank');
+            },
             initDate() {
                 let params = {};
                 params.id = window.sessionStorage.getItem("showDetailId");

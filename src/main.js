@@ -11,7 +11,7 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 
 router.beforeEach((to, from, next) => {
-    if (to.path == "/" || to.path == '/recruitPublish' || to.path == '/showDetail') {
+    if (to.path == "/" || to.path == '/recruitPublish' || to.path == '/showDetail' || to.path == '/inputResume') {
         next();
     } else {
         if (window.sessionStorage.getItem('currentUser')) {
