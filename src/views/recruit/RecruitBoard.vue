@@ -37,10 +37,10 @@
                 <el-table-column prop="degreeStr" label="最低学历" align="center" width="100"></el-table-column>
                 <el-table-column prop="degreeStr" label="发布状态" align="center" width="100">
                     <template slot-scope="scope">
-                        <el-tag :type="typeDemo(scope.row.publish)"
-                                disable-transitions>{{scope.row.publishStr}}
-                        </el-tag>
-                    </template>
+                    <el-tag :type="typeDemo(scope.row.publish)"
+                            disable-transitions>{{scope.row.publishStr}}
+                    </el-tag>
+                </template>
                 </el-table-column>
                 <el-table-column fixed="right" label="操作" align="center">
                     <template slot-scope="scope">
@@ -166,9 +166,11 @@
             },
             sizeChange(val) {
                 this.queryForm.pageSize = val;
+                this.initStaffNeedsDate();
             },
             currentChange(val) {
                 this.queryForm.pageIndex = val;
+                this.initStaffNeedsDate();
             },
             queryHandleNodeClick(data) {
                 this.queryForm.departmentId = data.id;

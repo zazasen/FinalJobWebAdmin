@@ -1,3 +1,4 @@
+<!--招聘看板详情-->
 <template>
     <el-container>
         <el-header style="margin-top: 30px;height: 50px;text-align: center;font-size: 25px;font-family: 华文楷体">招聘需求

@@ -67,9 +67,11 @@
             },
             sizeChange(val) {
                 this.queryForm.pageSize = val;
+                this.initDate();
             },
             currentChange(val) {
                 this.queryForm.pageIndex = val;
+                this.initDate();
             },
         }
     }
