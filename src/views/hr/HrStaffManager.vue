@@ -718,7 +718,7 @@
                 })
             },
             initDepData() {
-                getRequest("/hr/department/getAllDepartment").then(resp => {
+                getRequest("/hr/staff/getAllDepartment").then(resp => {
                     if (resp) {
                         this.depData = resp.data;
                     }

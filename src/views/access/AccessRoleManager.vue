@@ -98,9 +98,10 @@
                     pageSize: 10,
                     pageIndex: 1,
                 },
-                pageSizes: [10,15,20,50],
+                pageSizes: [10, 15, 20, 50],
                 dialogVisible: false,
                 ruleForm: {
+                    id: '',
                     roleName: '',
                     roleZh: '',
                     remark: '',

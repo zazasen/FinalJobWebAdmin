@@ -26,7 +26,7 @@
         },
         methods: {
             initCalendar() {
-                getRequest("/staff/myAttendance/calendarShow").then(resp => {
+                getRequest("/system/config/calendarShow").then(resp => {
                     if (resp) {
                         this.calendarData = resp.data;
                     }

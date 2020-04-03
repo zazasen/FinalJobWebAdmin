@@ -107,7 +107,7 @@
         },
         methods: {
             getLeaveInfo() {
-                postRequest("/home/getLeaveInfo").then(resp => {
+                postRequest("/system/config/getLeaveInfo").then(resp => {
                     if (resp) {
                         this.leaveInfo = resp.data;
                     }
@@ -144,7 +144,7 @@
                 })
             },
             initExceptionCheckIn() {
-                postRequest("/home/getExceptionCheckIn").then(resp => {
+                postRequest("/system/config/getExceptionCheckIn").then(resp => {
                     this.exceptionCheckIn = resp.data;
                     for (let i in this.exceptionCheckIn) {
                         if (this.exceptionCheckIn[i].name === '早退') {
@@ -160,7 +160,7 @@
                 })
             },
             getDays() {
-                postRequest("/home/getShouldBeWorkDays").then(resp => {
+                postRequest("/system/config/getShouldBeWorkDays").then(resp => {
                     if (resp) {
                         this.days = resp.data;
                         for (let i in this.days) {

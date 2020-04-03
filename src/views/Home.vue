@@ -99,7 +99,7 @@
                 window.open(routeUrl.href, '_blank');
             },
             getSignType() {
-                getRequest("/staff/myAttendance/signType").then(resp => {
+                getRequest("/system/config/signType").then(resp => {
                     if (resp) {
                         this.signType = resp.data.type;
                         if (this.signType == 1) {
@@ -150,7 +150,7 @@
                 }
                 if (param == 'signIn') {
                     if (this.signType == 0) {
-                        postRequest("/staff/myAttendance/signIn").then(resp => {
+                        postRequest("/system/config/signIn").then(resp => {
                             if (resp) {
                                 this.getSignType();
                             }
@@ -158,7 +158,7 @@
 
                     }
                     if (this.signType == 1) {
-                        postRequest("/staff/myAttendance/signOut").then(resp => {
+                        postRequest("/system/config/signOut").then(resp => {
                             if (resp) {
                                 this.getSignType();
                             }
