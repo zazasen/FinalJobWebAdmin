@@ -23,6 +23,12 @@
                            :value="item.id"/>
             </el-select>
 
+            <el-select v-model="queryForm.confirm" clearable placeholder="合同状态"
+                       style="width: 200px;margin-left: 10px">
+                <el-option v-for="(item,index) in confirms" :key="index" :label="item.name"
+                           :value="item.id"/>
+            </el-select>
+
             <el-button style="margin-left: 10px" @click="initContractData">查询</el-button>
         </div>
 
@@ -40,9 +46,9 @@
                 <el-table-column prop="email" label="邮箱" align="center"/>
                 <el-table-column prop="beginContractTime" label="合同开始日期" align="center"/>
                 <el-table-column prop="endContractTime" label="合同结束日期" align="center"/>
-                <el-table-column prop="signState" label="签署状态" width="100" align="center">
+                <el-table-column prop="confirm" label="签署状态" width="100" align="center">
                     <template slot-scope="scope">
-                        <el-tag :type="getType(scope.row)" disable-transitions>{{scope.row.signState}}</el-tag>
+                        <el-tag :type="getType(scope.row)" disable-transitions>{{scope.row.confirmStr}}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" width="150">
@@ -75,6 +81,7 @@
                 queryForm: {
                     realName: '',
                     workId: '',
+                    confirm:'',
                     departmentId: null,
                     workState: 1,
                     pageSize: 10,
@@ -95,6 +102,16 @@
                     id: 0,
                     name: "离职"
                 }],
+                confirms: [{
+                    id: 0,
+                    name: "未签署"
+                }, {
+                    id: 1,
+                    name: "待签署"
+                }, {
+                    id: 2,
+                    name: "已签署"
+                }],
             }
         },
         mounted() {
@@ -105,18 +122,24 @@
             addContract(row) {
                 let params = {};
                 params.userId = row.userId;
-                postRequest("/hr/contract/addContract",params)
+                postRequest("/hr/contract/addContract",params).then(resp=>{
+                    if(resp){
+                        this.initContractData();
+                    }
+                })
             },
             getContract(row) {
                 window.open("/hr/contract/getContract?userId=" + row.userId);
             },
             getType(row) {
-                if (row.signState === '待签署') {
-                    return 'primary';
-                } else if (row.signState === '已签署') {
-                    return 'success';
-                } else {
+                if (row.confirm == 0) {
                     return 'danger';
+                }
+                if (row.confirm == 1) {
+                    return 'primary';
+                }
+                if (row.confirm == 2){
+                    return 'success';
                 }
             },
             initContractData() {

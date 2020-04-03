@@ -8,9 +8,9 @@
                   element-loading-background="rgba(0, 0, 0, 0.8)">
             <el-table-column prop="beginContractTime" label="合同开始日期" align="center"/>
             <el-table-column prop="endContractTime" label="合同结束日期" align="center"/>
-            <el-table-column prop="signState" label="签署状态" align="center">
+            <el-table-column prop="confirm" label="签署状态" align="center">
                 <template slot-scope="scope">
-                    <el-tag :type="getType(scope.row)" disable-transitions>{{scope.row.signState}}</el-tag>
+                    <el-tag :type="getType(scope.row)" disable-transitions>{{scope.row.confirmStr}}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column label="操作" width="200">
