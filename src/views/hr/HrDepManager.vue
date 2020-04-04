@@ -105,6 +105,11 @@
                 postRequest("/hr/department/getDepStaff", param).then(resp => {
                     if (resp) {
                         this.depStaff = resp.data;
+                        if (this.depStaff == null || this.depStaff.length <= 0) {
+                            this.depFormDate.userId = null;
+                        }
+                    } else {
+                        this.depFormDate.userId = null;
                     }
                 })
             },
@@ -166,8 +171,8 @@
             },
             handleClick(row) {
                 this.depFormDate = Object.assign({}, row);
-                this.dialogVisible = true;
                 this.getDepStaff();
+                this.dialogVisible = true;
             },
             updateDep() {
                 if (this.depFormDate.name) {

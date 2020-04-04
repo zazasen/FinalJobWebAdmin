@@ -52,7 +52,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="finalSalary" label="实发工资" align="center"></el-table-column>
-                <el-table-column prop="createTime" label="创建时间" align="center"></el-table-column>
+                <el-table-column prop="createTimeStr" label="创建时间" align="center"></el-table-column>
             </el-table>
             <el-pagination @size-change="sizeChange"
                            @current-change="currentChange"
@@ -64,6 +64,7 @@
         </div>
     </div>
 </template>
+<!--group1/M00/00/00/wKgAuV6IJFGAK_C3AC_2XF7q25Q594.png-->
 
 <script>
     import {postRequest} from "../../utils/RequestUtil";

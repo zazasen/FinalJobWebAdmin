@@ -13,15 +13,33 @@
                       element-loading-text="拼命加载中"
                       element-loading-spinner="el-icon-loading"
                       element-loading-background="rgba(0, 0, 0, 0.8)">
-                <el-table-column prop="createTime" label="日期" width="250" align="center"/>
-                <el-table-column prop="startTime" label="上班签到时间" width="250" align="center"/>
-                <el-table-column prop="startPlace" label="上班签到地址" width="200" align="center"/>
-                <el-table-column prop="startTypeStr" label="上班签到类型" width="150" align="center"/>
-                <el-table-column prop="endTime" label="下班签到时间" width="250" align="center"/>
-                <el-table-column prop="endPlace" label="下班签到地址" width="200" align="center"/>
-                <el-table-column prop="endTypeStr" label="下班签到类型" width="150" align="center"/>
-                <el-table-column prop="signTypeStr" label="打卡状态" width="150" align="center"/>
-                <el-table-column prop="workHoursStr" label="上班时长" width="150" align="center"/>
+                <el-table-column prop="createTime" label="日期" width="120" align="center"/>
+                <el-table-column prop="startTime" label="上班签到时间" width="180" align="center"/>
+                <el-table-column prop="startPlace" label="上班签到地址" width="150" align="center"/>
+                <el-table-column prop="startTypeStr" label="上班签到类型" width="100" align="center">
+                    <template slot-scope="scope">
+                        <el-tag :type="typeDemo(scope.row.startType)"
+                                disable-transitions>{{scope.row.startTypeStr}}
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="endTime" label="下班签到时间" width="180" align="center"/>
+                <el-table-column prop="endPlace" label="下班签到地址" width="150" align="center"/>
+                <el-table-column prop="endTypeStr" label="下班签到类型" width="100" align="center">
+                    <template slot-scope="scope">
+                        <el-tag :type="typeDemo(scope.row.startType)"
+                                disable-transitions>{{scope.row.startTypeStr}}
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="signTypeStr" label="打卡状态" width="90" align="center">
+                    <template slot-scope="scope">
+                        <el-tag :type="signTypeDemo(scope.row.signType)"
+                                disable-transitions>{{scope.row.signTypeStr}}
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="workHoursStr" label="上班时长" align="center"/>
                 <el-table-column label="操作" width="100" align="center" fixed="right">
                     <template slot-scope="scope">
                         <el-button @click="remedySign(scope.row)" type="text" size="small">补签</el-button>
@@ -98,6 +116,37 @@
             this.initRecord();
         },
         methods: {
+            signTypeDemo(type){
+                if(type == null){
+                    return 'info';
+                }
+                if(type == 0 || type == 3){
+                    return 'danger';
+                }
+                if(type == 1){
+                    return 'primary';
+                }
+                if(type == 2){
+                    return 'success';
+                }
+            },
+            typeDemo(type){
+                if(type == null){
+                    return 'danger';
+                }
+                if(type == 0){
+                    return 'primary';
+                }
+                if(type == 1){
+                    return 'primary';
+                }
+                if(type == 2){
+                    return 'success';
+                }
+                if(type == 3){
+                    return 'danger';
+                }
+            },
             startApply() {
                 this.updateData.endTime = null;
                 // 签到补卡类型

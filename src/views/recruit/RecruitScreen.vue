@@ -1,3 +1,4 @@
+<!--简历筛选-->
 <template>
     <div>
         <div>
@@ -43,7 +44,7 @@
                 <el-table-column prop="email" label="邮箱" align="center" width="200"></el-table-column>
                 <el-table-column prop="idCard" label="身份证号" align="center" width="200"></el-table-column>
                 <el-table-column prop="createTime" label="申请时间" align="center" width="200"></el-table-column>
-                <el-table-column prop="statusStr" label="状态" width="100" align="center">
+                <el-table-column prop="statusStr" label="状态" width="80" align="center">
                     <template slot-scope="scope">
                         <el-tag :type="typeDemo(scope.row.status)"
                                 disable-transitions>{{scope.row.statusStr}}
