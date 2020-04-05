@@ -1,4 +1,4 @@
-<!--招聘需求页面-->
+<!--招聘需求申请页面-->
 <template>
     <div>
         <el-card shadow="never">

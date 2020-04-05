@@ -1,28 +1,29 @@
 <template>
     <div style="position: absolute;width:100%;height: 100%;">
         <el-container style="height: 100%">
-            <el-header class="header">
+            <el-header class="header" style="height: 50px">
                 <div class="title" :style="leftStyle">
                     <span v-if="showTitle">前端用户中心</span>
                     <el-button :style="butStyle" type="text" :icon="butIcon"
                                @click="isCollapseChange"/>
                 </div>
                 <div style="display: flex;justify-content: space-between">
-                    <div>
-                        <el-button icon="el-icon-message-solid" @click="toChat"
-                                   style="color:white;margin-right: 20px;margin-top: 8px" type="text"></el-button>
+                    <div style="line-height: 50px">
+                        <el-button icon="el-icon-bell" @click="toChat"
+                                   style="color:white;margin-right: 40px;font-size: 18px; " type="text"></el-button>
                     </div>
-                    <div>
+                    <div style="margin-top: 5px">
                         <el-dropdown @command="commandEvent">
-                      <span class="el-dropdown-link">
-                          <i><img :src="user.userFace" class="userFace"></i>
-                        {{user.username}}<i class="el-icon-arrow-down el-icon--right"></i>
-                      </span>
+                            <span class="el-dropdown-link">
+                              <i><img :src="user.userFace" class="userFace"></i>
+                            {{user.username}}<i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
                             <el-dropdown-menu slot="dropdown">
                                 <!--                        <el-dropdown-item command="userCenter">用户中心</el-dropdown-item>-->
                                 <el-dropdown-item command="signIn">{{signShow}}</el-dropdown-item>
                                 <!--                        <el-dropdown-item command="setting">设置</el-dropdown-item>-->
-                                <el-dropdown-item command="recruitPublish">招聘页面</el-dropdown-item>
+                                <el-dropdown-item command="myInfo">我的信息</el-dropdown-item>
+                                <el-dropdown-item command="recruitPublish" divided>招聘页面</el-dropdown-item>
                                 <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
@@ -68,6 +69,7 @@
         name: "Home",
         data() {
             return {
+                dialogVisible:false,
                 user: JSON.parse(window.sessionStorage.getItem("currentUser")),
                 // routes:this.$router.options.routes
                 butIcon: "el-icon-s-fold",
@@ -95,7 +97,7 @@
         methods: {
             toChat() {
                 // this.$router.push('/chat')
-                let routeUrl = this.$router.resolve({ path: "/chat"});
+                let routeUrl = this.$router.resolve({path: "/chat"});
                 window.open(routeUrl.href, '_blank');
             },
             getSignType() {
@@ -165,9 +167,12 @@
                         })
                     }
                 }
-                if(param == 'recruitPublish'){
+                if (param == 'recruitPublish') {
                     let routeUrl = this.$router.resolve({path: "/recruitPublish"});
                     window.open(routeUrl.href, '_blank');
+                }
+                if (param == 'myInfo') {
+                    this.$router.push('/myInfo');
                 }
             }
         }
@@ -193,8 +198,8 @@
     }
 
     .userFace {
-        width: 48px;
-        height: 48px;
+        width: 40px;
+        height: 40px;
         border-radius: 24px;
         margin-right: 8px;
     }

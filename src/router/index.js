@@ -7,6 +7,7 @@ import RecruitBoardDetail from "../views/recruit/RecruitBoardDetail";
 import RecruitPublish from "../views/recruit/RecruitPublish";
 import ShowDetail from "../views/recruit/ShowDetail";
 import InputResume from "../views/recruit/InputResume";
+import MyInfo from "../views/MyInfo";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,14 @@ const routes = [
         name: 'Home',
         component: Home,
         show: true,
+        children: [
+            {
+                path: '/myInfo',
+                name: '我的信息',
+                component: MyInfo,
+                show: true,
+            }
+        ]
     }, {
         path: '/chat',
         name: '在线聊天',
