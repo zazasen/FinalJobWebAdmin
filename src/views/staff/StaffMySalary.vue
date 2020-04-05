@@ -64,7 +64,6 @@
         </div>
     </div>
 </template>
-<!--group1/M00/00/00/wKgAuV6IJFGAK_C3AC_2XF7q25Q594.png-->
 
 <script>
     import {postRequest} from "../../utils/RequestUtil";
