@@ -94,7 +94,7 @@
                     </el-col>
                     <el-col :span="8">
                         <el-button size="mini" @click="queryStaffDate">搜索</el-button>
-                        <el-button size="mini" type="success" @click="addButton">新增</el-button>
+                        <el-button size="mini" type="success" @click="addButton">入职</el-button>
                         <el-button size="mini" type="danger" :disabled="mulDelTemp" @click="mulDel">删除</el-button>
 
                         <el-upload style="display: inline-flex;margin-right: 10px;margin-left: 10px" action="/hr/staff/importStaff"

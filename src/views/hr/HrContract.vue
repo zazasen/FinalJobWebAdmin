@@ -24,12 +24,17 @@
             </el-select>
 
             <el-select v-model="queryForm.confirm" clearable placeholder="合同状态"
-                       style="width: 200px;margin-left: 10px">
+                       style="width: 200px;margin-left: 10px;margin-right: 10px">
                 <el-option v-for="(item,index) in confirms" :key="index" :label="item.name"
                            :value="item.id"/>
             </el-select>
 
-            <el-button style="margin-left: 10px" @click="initContractData">查询</el-button>
+            <el-date-picker v-model="queryForm.endTime" type="date" style="width: 200px;" placeholder="合同结束日期"
+                            value-format="timestamp"></el-date-picker>
+
+            <el-button style="float: right;margin-right: 30px;margin-top: 10px;margin-bottom: 10px"
+                       @click="initContractData">查询
+            </el-button>
         </div>
 
         <div>
@@ -51,10 +56,11 @@
                         <el-tag :type="getType(scope.row)" disable-transitions>{{scope.row.confirmStr}}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="150">
+                <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="getContract(scope.row)">查看合同</el-button>
-                        <el-button type="text" size="small" @click="addContract(scope.row)">发起合同</el-button>
+                        <el-button type="text" size="mini" @click="getContract(scope.row)">查看合同</el-button>
+                        <el-button type="text" size="mini" @click="addContract(scope.row)">发起合同</el-button>
+                        <el-button type="text" size="mini" @click="renewal(scope.row)">续签</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -81,8 +87,9 @@
                 queryForm: {
                     realName: '',
                     workId: '',
-                    confirm:'',
+                    confirm: '',
                     departmentId: null,
+                    endTime: '',
                     workState: 1,
                     pageSize: 10,
                     pageIndex: 1,
@@ -119,11 +126,20 @@
             this.initContractData();
         },
         methods: {
+            renewal(row) {
+                let params = {};
+                params.userId = row.userId;
+                postRequest("/hr/contract/renewalContract", params).then(resp => {
+                    if (resp) {
+                        this.initContractData();
+                    }
+                })
+            },
             addContract(row) {
                 let params = {};
                 params.userId = row.userId;
-                postRequest("/hr/contract/addContract",params).then(resp=>{
-                    if(resp){
+                postRequest("/hr/contract/addContract", params).then(resp => {
+                    if (resp) {
                         this.initContractData();
                     }
                 })
@@ -138,7 +154,7 @@
                 if (row.confirm == 1) {
                     return 'primary';
                 }
-                if (row.confirm == 2){
+                if (row.confirm == 2) {
                     return 'success';
                 }
             },

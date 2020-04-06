@@ -57,12 +57,14 @@
                 });
             },
             getType(row) {
-                if (row.signState === '待签署') {
-                    return 'primary';
-                } else if (row.signState === '已签署') {
-                    return 'success';
-                } else {
+                if (row.confirm == 0) {
                     return 'danger';
+                }
+                if (row.confirm == 1) {
+                    return 'primary';
+                }
+                if (row.confirm == 2) {
+                    return 'success';
                 }
             },
             initMyContract() {
