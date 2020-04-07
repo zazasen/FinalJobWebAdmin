@@ -233,6 +233,7 @@
                 this.queryForm.departmentId = null;
             },
             initSalary() {
+                this.loading = true;
                 postRequest("/salary/handle/getAllSalary", this.queryForm).then(resp => {
                     if (resp) {
                         this.loading = false;

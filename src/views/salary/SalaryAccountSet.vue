@@ -1,6 +1,9 @@
 <template>
     <div>
-        <div style="float: right;margin-bottom: 20px">
+        <div style="margin-bottom: 10px">
+            <el-input placeholder="请输入账套名" v-model="queryFrom.name" clearable style="width: 200px;margin-right: 10px"></el-input>
+            <el-button @click="initAccountSetData">搜索</el-button>
+
             <el-button type="primary" @click="showAddAccountSetDialog">添加账套</el-button>
         </div>
         <div>
@@ -341,6 +344,7 @@
                 accountSetData: null,
                 total: null,
                 queryFrom: {
+                    name:"",
                     pageIndex: 1,
                     pageSize: 10,
                 },

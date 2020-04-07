@@ -203,10 +203,12 @@
                 }
                 this.dialogVisible = true;
             },
-            sizeChange() {
+            sizeChange(val) {
+                this.pageSize = val;
                 this.initRecord();
             },
-            currentChange() {
+            currentChange(val) {
+                this.pageIndex = val;
                 this.initRecord();
             },
             initRecord() {

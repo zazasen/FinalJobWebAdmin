@@ -107,7 +107,9 @@
         },
         methods: {
             getLeaveInfo() {
-                postRequest("/system/config/getLeaveInfo").then(resp => {
+                let params = {};
+                params.month = null;
+                postRequest("/system/config/getLeaveInfo",params).then(resp => {
                     if (resp) {
                         this.leaveInfo = resp.data;
                     }
@@ -144,7 +146,9 @@
                 })
             },
             initExceptionCheckIn() {
-                postRequest("/system/config/getExceptionCheckIn").then(resp => {
+                let params = {};
+                params.month = null;
+                postRequest("/system/config/getExceptionCheckIn",params).then(resp => {
                     this.exceptionCheckIn = resp.data;
                     for (let i in this.exceptionCheckIn) {
                         if (this.exceptionCheckIn[i].name === '早退') {
@@ -160,7 +164,9 @@
                 })
             },
             getDays() {
-                postRequest("/system/config/getShouldBeWorkDays").then(resp => {
+                let params={};
+                params.month = null;
+                postRequest("/system/config/getShouldBeWorkDays",params).then(resp => {
                     if (resp) {
                         this.days = resp.data;
                         for (let i in this.days) {
