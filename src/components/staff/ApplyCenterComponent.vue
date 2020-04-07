@@ -4,6 +4,7 @@
             <el-button style="border-radius: 0px" @click="overtimeApply">加班申请</el-button>
             <el-button @click="leaveApply" type="primary" style="border-radius: 0px">请假申请</el-button>
             <el-button @click="quitJobApply" type="danger" style="border-radius: 0px">离职申请</el-button>
+            <el-button type="success" @click="conversionApply" style="margin-left: 10px">转正申请</el-button>
         </div>
 
         <el-dialog title="加班申请" :visible.sync="overtimeDialogVisible" width="40%">
@@ -40,6 +41,17 @@
             <span slot="footer" class="dialog-footer">
                 <el-button @click="QuitJobDialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="quitJobDefine">确 定</el-button>
+            </span>
+        </el-dialog>
+
+        <el-dialog title="转正申请" :visible.sync="conversionDialogVisible" width="40%">
+            <div>
+                <label style="margin-right: 20px;margin-left: 20px;">转正原因</label>
+                <el-input type="textarea" v-model="conversionForm.reason" style="width: 350px;margin-top: 10px"/>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="conversionDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="conversionDefine">确 定</el-button>
             </span>
         </el-dialog>
 
@@ -81,6 +93,7 @@
                 overtimeDialogVisible: false,
                 dialogVisible: false,
                 QuitJobDialogVisible: false,
+                conversionDialogVisible: false,
                 options: [{
                     value: '0',
                     label: '调休'
@@ -130,6 +143,9 @@
                 quitJobForm: {
                     leaveTime: null,
                     reason: null,
+                },
+                conversionForm: {
+                    reason: null,
                 }
             }
         },
@@ -146,8 +162,12 @@
                 this.quitJobForm = {};
                 this.QuitJobDialogVisible = true;
             },
+            conversionApply() {
+                this.conversionForm = {};
+                this.conversionDialogVisible = true;
+            },
             quitJobDefine() {
-                if(!this.quitJobForm.leaveTime){
+                if (!this.quitJobForm.leaveTime) {
                     this.$message.error("请输入离职时间");
                     return;
                 }
@@ -158,6 +178,18 @@
                 postRequest("/staff/myRecord/quitJobApply", this.quitJobForm).then(resp => {
                     if (resp) {
                         this.QuitJobDialogVisible = false;
+                    }
+                });
+            },
+
+            conversionDefine() {
+                if (!this.conversionForm.reason) {
+                    this.$message.error("请输入转正理由");
+                    return;
+                }
+                postRequest("/staff/myRecord/conversionApply", this.conversionForm).then(resp => {
+                    if (resp) {
+                        this.conversionDialogVisible = false;
                     }
                 });
             },
