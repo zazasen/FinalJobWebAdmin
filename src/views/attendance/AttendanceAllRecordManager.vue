@@ -30,7 +30,7 @@
                 <el-table-column prop="username" label="员工姓名" width="100" align="center" fixed="left"/>
                 <el-table-column prop="startTime" label="上班签到时间" width="170" align="center"/>
                 <el-table-column prop="startPlace" label="上班签到地址" width="150" align="center"/>
-                <el-table-column prop="startTypeStr" label="上班签到类型" width="100" align="center">
+                <el-table-column prop="startTypeStr" label="上班签到类型" width="120" align="center">
                     <template slot-scope="scope">
                         <el-tag :type="typeDemo(scope.row.startType)"
                                 disable-transitions>{{scope.row.startTypeStr}}
@@ -39,7 +39,7 @@
                 </el-table-column>
                 <el-table-column prop="endTime" label="下班签到时间" width="170" align="center"/>
                 <el-table-column prop="endPlace" label="下班签到地址" width="150" align="center"/>
-                <el-table-column prop="endTypeStr" label="下班签到类型" width="100" align="center">
+                <el-table-column prop="endTypeStr" label="下班签到类型" width="120" align="center">
                     <template slot-scope="scope">
                         <el-tag :type="typeDemo(scope.row.endType)"
                                 disable-transitions>{{scope.row.endTypeStr}}
@@ -54,7 +54,12 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="workHoursStr" label="上班时长" width="100" align="center"/>
-                <el-table-column prop="createTime" label="日期" align="center" fixed="right"/>
+                <el-table-column prop="createTime" label="日期" width="100" align="center" fixed="right"/>
+                <el-table-column label="操作" fixed="right" width="150" align="center">
+                    <template slot-scope="scope">
+                        <el-button type="text" size="small" @click="updateCheckIn(scope.row)">人工补卡</el-button>
+                    </template>
+                </el-table-column>
             </el-table>
             <el-pagination @size-change="sizeChange"
                            @current-change="currentChange"
@@ -74,7 +79,7 @@
         name: "AttendanceAllRecordManager",
         data() {
             return {
-                queryVisible:false,
+                queryVisible: false,
                 depData: [],
                 defaultProps: {
                     children: 'children',
@@ -89,10 +94,10 @@
                 pageSize: 10,
                 total: null,
                 queryForm: {
-                    realName:'',
+                    realName: '',
                     startTime: '',
                     endTime: '',
-                    departmentId:'',
+                    departmentId: '',
                 }
             }
         },
@@ -101,6 +106,15 @@
             this.initDepData();
         },
         methods: {
+            updateCheckIn(row) {
+                let params = {};
+                params.id = row.id;
+                postRequest("/attendance/allRecord/updateCheckIn",params).then(resp=>{
+                    if(resp){
+                        this.initRecord();
+                    }
+                })
+            },
             initDepData() {
                 getRequest("/attendance/allRecord/getAllDepartment").then(resp => {
                     if (resp) {
@@ -117,34 +131,34 @@
                 this.queryForm.departmentId = data.id;
                 this.queryDepartmentName = data.name;
             },
-            signTypeDemo(type){
-                if(type == null){
+            signTypeDemo(type) {
+                if (type == null) {
                     return 'info';
                 }
-                if(type == 0 || type == 3){
+                if (type == 0 || type == 3) {
                     return 'danger';
                 }
-                if(type == 1){
+                if (type == 1) {
                     return 'primary';
                 }
-                if(type == 2){
+                if (type == 2) {
                     return 'success';
                 }
             },
-            typeDemo(type){
-                if(type == null){
+            typeDemo(type) {
+                if (type == null) {
                     return 'danger';
                 }
-                if(type == 0){
+                if (type == 0) {
                     return 'primary';
                 }
-                if(type == 1){
+                if (type == 1) {
                     return 'primary';
                 }
-                if(type == 2){
+                if (type == 2) {
                     return 'success';
                 }
-                if(type == 3){
+                if (type == 3) {
                     return 'danger';
                 }
             },
@@ -172,7 +186,7 @@
                         this.loading = false;
                         this.total = resp.total;
                         this.allAttendanceRecord = resp.data;
-                    }else {
+                    } else {
                         this.loading = false;
                     }
                 })
