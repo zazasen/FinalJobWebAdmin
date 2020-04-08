@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <el-input v-model="queryForm.realName" clearable placeholder="请输入员工名" style="width: 200px"/>
+            <el-input v-model="queryForm.realName" clearable placeholder="请输入员工名" style="width: 180px"/>
             <el-popover placement="right" width="500" v-model="queryVisible">
                 <el-tree :data="depData" :props="defaultProps" @node-click="queryHandleNodeClick"
                          :expand-on-click-node="false"
@@ -15,16 +15,16 @@
                     <span style="color: #C0C0C0">{{queryDepartmentName}}</span>
                 </el-button>
             </el-popover>
-            <el-input v-model="queryForm.workId" clearable placeholder="请输入工号" style="width: 200px;margin-left: 10px"/>
+            <el-input v-model="queryForm.workId" clearable placeholder="请输入工号" style="width: 180px;margin-left: 10px"/>
 
             <el-select v-model="queryForm.workState" clearable placeholder="在职状态"
-                       style="width: 200px;margin-left: 10px">
+                       style="width: 180px;margin-left: 10px">
                 <el-option v-for="(item,index) in workState" :key="index" :label="item.name"
                            :value="item.id"/>
             </el-select>
 
             <el-date-picker v-model="queryForm.month" type="month" placeholder="选择月" value-format="timestamp"
-                            style="width: 200px;margin-left: 10px"/>
+                            style="width: 180px;margin-left: 10px"/>
 
             <el-button style="margin-left: 10px" @click="initSalary">查询</el-button>
 
@@ -41,15 +41,19 @@
                        element-loading-spinner="el-icon-loading"
                        element-loading-background="rgba(0, 0, 0, 0.8)">薪资结算
             </el-button>
+
+            <el-button type="danger" @click="delMul" :disabled="disabled">删除</el-button>
         </div>
 
         <div>
             <el-table :data="salaryData" style="width: 100%;margin-top: 10px" border stripe
                       :header-cell-style="{background:'#eef1f6',color:'#606266'}"
+                      @selection-change="handleSelectionChange"
                       v-loading="loading" size="small"
                       element-loading-text="拼命加载中"
                       element-loading-spinner="el-icon-loading"
                       element-loading-background="rgba(0, 0, 0, 0.8)">
+                <el-table-column type="selection" width="55" fixed="left"></el-table-column>
                 <el-table-column prop="realName" label="员工姓名" width="100px" align="center" fixed="left"/>
                 <el-table-column prop="workId" label="工号" width="100px" align="center"/>
                 <el-table-column prop="departmentName" label="部门" width="100px" align="center"/>
@@ -94,9 +98,10 @@
                 </el-table-column>
                 <el-table-column prop="finalSalary" label="实发工资" align="center" width="100px"></el-table-column>
                 <el-table-column prop="createTime" label="创建时间" align="center" width="200px"></el-table-column>
-                <el-table-column label="操作" width="100px" fixed="right">
+                <el-table-column label="操作" width="100px" fixed="right" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" size="small" @click="showDialog(scope.row)">补差价</el-button>
+                        <el-button type="text" size="small" @click="delOne(scope.row)" style="color: red">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -134,6 +139,8 @@
         name: "SalaryHandle",
         data() {
             return {
+                disabled:true,
+                multipleSelection: [],
                 dialogVisible: false,
                 inputForm: {
                     money: null,
@@ -175,6 +182,58 @@
             this.initSalary();
         },
         methods: {
+            delMul(){
+                this.$confirm('此操作将删除选中员工薪资数据, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let params = {};
+                    params.ids = [];
+                    for (let i = 0; i < this.multipleSelection.length; i++) {
+                        params.ids[i] = this.multipleSelection[i].id;
+                    }
+                    postRequest("/salary/handle/delMul", params).then(resp => {
+                        if (resp) {
+                            this.initSalary();
+                        }
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            delOne(row){
+                this.$confirm('此操作将删除 <span style="color:red">' + row.realName + '</span> 员工薪资数据,是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                    dangerouslyUseHTMLString: true
+                }).then(() => {
+                    let params = {};
+                    params.id = row.id;
+                    postRequest("/salary/handle/delOne", params).then(resp => {
+                        if (resp) {
+                            this.initSalary();
+                        }
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            handleSelectionChange(val) {
+                if (val.length > 0) {
+                    this.disabled = false;
+                    this.multipleSelection = val;
+                } else {
+                    this.disabled = true;
+                }
+            },
             showDialog(row) {
                 this.dialogVisible = true;
                 this.inputForm = {};
