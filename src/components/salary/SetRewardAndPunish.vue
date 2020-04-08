@@ -47,6 +47,10 @@
             </el-pagination>
         </div>
         <el-dialog title="添加奖惩" :visible.sync="dialogVisible" width="40%">
+            <div style="margin-bottom: 10px">
+                <label style="margin-right: 20px;margin-left: 20px">奖惩时间</label>
+                <el-date-picker v-model="inputForm.createTime" type="date" value-format="timestamp" placeholder="选择日期"></el-date-picker>
+            </div>
             <div>
                 <label style="margin-right: 20px;margin-left: 20px">奖惩金额</label>
                 <el-input type="number" step="0.01" v-model="inputForm.money" autocomplete="off"
@@ -82,6 +86,7 @@
                 detailDialog: false,
                 rewardAndPunishDetail: null,
                 inputForm: {
+                    createTime:'',
                     money: null,
                     reason: null,
                     userId: null,
@@ -125,6 +130,10 @@
                 this.inputForm.userId = row.userId;
             },
             addRewardAndPunish() {
+                if (!this.inputForm.createTime) {
+                    this.$message.error("请选择日期");
+                    return;
+                }
                 if (!this.inputForm.money) {
                     this.$message.error("请填写金额");
                     return;
