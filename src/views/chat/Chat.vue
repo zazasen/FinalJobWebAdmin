@@ -19,11 +19,6 @@
 
     export default {
         name: 'Chat',
-        data () {
-            return {
-
-            }
-        },
         mounted:function() {
             this.$store.dispatch('initData');
             this.$store.dispatch('connect');
@@ -33,7 +28,7 @@
             list,
             message,
             usertext
-        }
+        },
     }
 </script>
 

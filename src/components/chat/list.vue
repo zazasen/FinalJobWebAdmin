@@ -1,16 +1,19 @@
 <template>
-    <div id="list">
-        <ul style="padding-left: 0px">
-            <li v-for="item in users"
-                :class="{ active: currentSession ? item.username === currentSession.username:false}"
-                v-on:click="changeCurrentSession(item)">
-                <el-badge :is-dot="isDot[user.username+'#'+item.username]">
-                    <img class="avatar" :src="item.userFace" :alt="item.realName">
-                </el-badge>
-                <p class="name">{{item.realName}}</p>
-            </li>
-        </ul>
-    </div>
+    <el-scrollbar style="height: 100%" id="list">
+        <div :style="height">
+            <ul style="padding-left: 0px">
+                {{load(users)}}
+                <li v-for="item in users"
+                    :class="{ active: currentSession ? item.username === currentSession.username:false}"
+                    v-on:click="changeCurrentSession(item)" style="height: 50px">
+                    <el-badge :is-dot="isDot[user.username+'#'+item.username]">
+                        <img class="avatar" :src="item.userFace" :alt="item.realName">
+                    </el-badge>
+                    <p class="name">{{item.realName}}</p>
+                </li>
+            </ul>
+        </div>
+    </el-scrollbar>
 </template>
 
 <script>
@@ -21,6 +24,7 @@
         data() {
             return {
                 user: JSON.parse(window.sessionStorage.getItem("currentUser")),
+                height: 'height:100%',
             }
         },
         computed: mapState([
@@ -29,14 +33,20 @@
             'currentSession'
         ]),
         methods: {
+            load(val) {
+                if(val && val.length != 0){
+                    this.height = 'height:' + val.length * 65 + 'px';
+                }
+            },
             changeCurrentSession: function (currentSession) {
                 this.$store.commit('changeCurrentSession', currentSession)
             }
-        }
+        },
     }
 </script>
 
 <style lang="scss" scoped>
+
     #list {
         li {
             padding: 0px 15px;

@@ -1,6 +1,6 @@
 <template>
     <div id="uesrtext">
-        <textarea placeholder="按 Ctrl + Enter 发送" v-model="content" v-on:keyup="addMessage"></textarea>
+        <textarea placeholder="按 Enter 发送" v-model="content" v-on:keyup.enter="addMessage"></textarea>
     </div>
 </template>
 
@@ -19,7 +19,7 @@
         ]),
         methods: {
             addMessage(e) {
-                if (e.ctrlKey && e.keyCode === 13 && this.content.length) {
+                if (this.content.length) {
                   let msgObj = new Object();
                   msgObj.to = this.currentSession.username;
                   msgObj.content = this.content;

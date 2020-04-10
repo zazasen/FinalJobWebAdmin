@@ -5,17 +5,39 @@
             <p class="name">{{user.realName}}</p>
         </header>
         <footer>
-            <input class="search" type="text" v-model="$store.state.filterKey" placeholder="search user...">
+            <input class="search" type="text" v-on:keyup.enter="searchUser"
+                   v-model="$store.state.filterKey" placeholder="输入用户姓名，回车确认"></input>
         </footer>
     </div>
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+
     export default {
         name: 'card',
         data() {
             return {
                 user: JSON.parse(window.sessionStorage.getItem("currentUser")),
+            }
+        },
+        computed: mapState([
+            'users',
+        ]),
+        methods: {
+            searchUser() {
+                if(!this.$store.state.filterKey || this.$store.state.filterKey == ''){
+                    this.$store.dispatch('initData');
+                }
+                for (let i = 0; i < this.users.length; i++) {
+                    let user = this.users[i];
+                    if (user.realName == this.$store.state.filterKey) {
+                        let res = [];
+                        res[0] = user;
+                        this.$store.commit('INIT_USER', res);
+                        return;
+                    }
+                }
             }
         }
     }
