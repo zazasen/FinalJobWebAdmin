@@ -69,14 +69,21 @@ const store = new Vuex.Store({
             })
         },
         connect(context) {
-            context.state.stomp = Stomp.over(new SockJS('/ws/ep'));
-            context.state.stomp.connect({}, success => {
-                context.state.stomp.subscribe('/user/queue/chat', msg => {
-                    let receiveMsg = JSON.parse(msg.body);
+            if(typeof(WebSocket) == "undefined"){
+                console.log("您的浏览器不支持WebSocket");
+            }else{
+                // context.state.stomp = Stomp.over(new SockJS('/ws/ep'));
+                let socket = new WebSocket('ws://localhost:8081/ws/ep/' + context.state.currentUser.username);
+                context.state.stomp = socket;
+                //获得消息事件
+                socket.onmessage = function (msg) {
+                    console.log(msg.data);
+                    let receiveMsg = JSON.parse(msg.data);
                     if (!context.state.currentSession || receiveMsg.from != context.state.currentSession.username) {
                         Notification.info({
                             title: '[' + receiveMsg.fromRealName + ']发来一条消息',
-                            message: receiveMsg.content.length > 10 ? receiveMsg.content.substring(0, 10) : receiveMsg.content,
+                            // receiveMsg.content.length > 10 ? receiveMsg.content.substring(0, 10) :
+                            message: receiveMsg.content,
                             position: 'bottom-right'
                         });
                         Vue.set(context.state.isDot, context.state.currentUser.username + "#" + receiveMsg.from, true);
@@ -84,10 +91,8 @@ const store = new Vuex.Store({
                     receiveMsg.noSelf = true;
                     receiveMsg.to = receiveMsg.from;
                     context.commit('addMessage', receiveMsg);
-                })
-            }, error => {
-
-            })
+                };
+            }
         },
     },
     modules: {}

@@ -6,6 +6,7 @@
 
 <script>
     import {mapState} from 'vuex'
+    import {postRequest} from "../../utils/RequestUtil";
 
     export default {
         name: 'uesrtext',
@@ -23,7 +24,7 @@
                   let msgObj = new Object();
                   msgObj.to = this.currentSession.username;
                   msgObj.content = this.content;
-                  this.$store.state.stomp.send("/ws/chat", {},JSON.stringify(msgObj));
+                  postRequest("/chat/push",msgObj);
                   this.$store.commit('addMessage', msgObj);
                   this.content = '';
                 }
