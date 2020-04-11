@@ -73,8 +73,12 @@ const store = new Vuex.Store({
                 console.log("您的浏览器不支持WebSocket");
             }else{
                 // context.state.stomp = Stomp.over(new SockJS('/ws/ep'));
-                let socket = new WebSocket('ws://localhost:8081/ws/ep/' + context.state.currentUser.username);
+                let socket = new WebSocket('ws://'+window.document.domain+':8081'+'/ws/ep/' + context.state.currentUser.username);
                 context.state.stomp = socket;
+                //打开事件
+                socket.onopen = function() {
+                    console.log("websocket已打开");
+                };
                 //获得消息事件
                 socket.onmessage = function (msg) {
                     console.log(msg.data);
