@@ -332,11 +332,11 @@
                     this.$message.error("请选择最低学历");
                     return;
                 }
-                if (this.inputForm.minimumAge <= 18) {
+                if (this.inputForm.minimumAge < 18) {
                     this.$message.error("年龄下限不能小于18岁");
                     return;
                 }
-                if (this.inputForm.highestAge <= 18) {
+                if (this.inputForm.highestAge < 18) {
                     this.$message.error("年龄上限不能小于18岁");
                     return;
                 }

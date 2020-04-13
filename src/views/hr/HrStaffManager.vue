@@ -642,6 +642,7 @@
             resetForm(formName) {
                 this.addForm.nativePlace = "";
                 this.addForm = {};
+                this.addDepartmentName="请选择部门";
                 this.$refs[formName].resetFields();
                 this.dialogVisible = false;
             },
@@ -684,13 +685,11 @@
                 this.queryVisible = false;
                 this.queryDepartmentName = "请选择部门";
                 this.queryForm.departmentId = null;
-
             },
             addCancel() {
                 this.addVisible = false;
                 this.addDepartmentName = "请选择部门";
                 this.addForm.departmentId = null;
-
             },
             queryHandleNodeClick(data) {
                 this.queryForm.departmentId = data.id;
