@@ -6,7 +6,7 @@
                  element-loading-spinner="el-icon-loading"
                  element-loading-background="rgba(0, 0, 0, 0.8)">
             <div slot="header" class="loginTitle">
-                <span>登录到人事系统</span>
+                <span>登录到人力资源管理系统</span>
             </div>
             <div style="text-align: center">
                 <el-avatar :size="70" :src="circleUrl"></el-avatar>
