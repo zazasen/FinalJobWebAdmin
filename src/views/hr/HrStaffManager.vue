@@ -63,7 +63,7 @@
                     <el-col :span="4">
                         <el-select v-model="queryForm.workState" clearable placeholder="在职状态" size="mini">
                             <el-option v-for="(item,index) in workState" :key="index" :label="item.name"
-                                       :value="item.id"/>
+                                   :value="item.id"/>
                         </el-select>
                     </el-col>
                     <el-col :span="8">
@@ -172,7 +172,7 @@
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="登录账号" prop="username" size="small">
-                            <el-input v-model="addForm.username" placeholder="请输入登录账号" :disabled="diaType == '修改'"/>
+                            <el-input v-model="addForm.username" placeholder="请输入登录账号"/>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
@@ -356,22 +356,22 @@
                 addForm: {
                     id: null,
                     username: '',
-                    realName: '',
+                    realName: '陈大',
                     gender: 1,
-                    idCard: "",
-                    wedlock: null,
-                    nationId: null,
+                    idCard: "350525198711045617",
+                    wedlock: 1,
+                    nationId: 1,
                     nativePlaceArr: [],
                     nativePlace: "",
-                    politicsId: null,
-                    email: '',
-                    phone: "",
-                    address: "",
+                    politicsId: 1,
+                    email: 'zengsen5@qq.com',
+                    phone: "18815978332",
+                    address: "福建",
                     departmentId: null,
                     positionId: null,
-                    topDegree: null,
-                    specialty: "",
-                    school: "",
+                    topDegree: 5,
+                    specialty: "计算机科学与技术",
+                    school: "福建工程学院",
                     workAge: null,
                     birthday: "",
                     enabled: "",
@@ -468,7 +468,12 @@
                         {required: true, message: '请选择籍贯', trigger: 'change'},
                     ],
                     email: [
-                        {required: true, message: '请输入邮箱', trigger: 'blur'},
+                        {required: true, message: '请输入电子邮箱', trigger: 'blur'},
+                        {
+                            pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
+                            message: '电子邮箱格式不对',
+                            trigger: 'blur'
+                        }
                     ],
                     phone: [
                         {required: true, message: '请输入手机号码', trigger: 'blur'},

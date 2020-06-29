@@ -38,8 +38,8 @@
                       element-loading-spinner="el-icon-loading"
                       element-loading-background="rgba(0, 0, 0, 0.8)">
                 <el-table-column prop="name" label="姓名" align="center" width="100" fixed="left"></el-table-column>
-                <el-table-column prop="departmentName" label="申请部门" align="center" width="80"></el-table-column>
-                <el-table-column prop="positionName" label="申请职位" align="center" width="140"></el-table-column>
+                <el-table-column prop="departmentName" label="申请部门" align="center"></el-table-column>
+                <el-table-column prop="positionName" label="申请职位" align="center"></el-table-column>
                 <el-table-column prop="phone" label="手机号" align="center" width="120"></el-table-column>
                 <el-table-column prop="email" label="邮箱" align="center" width="200"></el-table-column>
                 <el-table-column prop="idCard" label="身份证号" align="center" width="200"></el-table-column>

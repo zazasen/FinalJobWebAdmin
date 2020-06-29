@@ -43,6 +43,8 @@
             </el-button>
 
             <el-button type="danger" @click="delMul" :disabled="disabled">删除</el-button>
+
+            <el-button type="success" @click="openExportDialog">薪资统计</el-button>
         </div>
 
         <div>
@@ -129,6 +131,16 @@
                 <el-button type="primary" @click="editSalary" size="small">确 定</el-button>
             </span>
         </el-dialog>
+
+        <el-dialog title="提示" :visible.sync="exportDialog" width="30%" >
+            <el-date-picker v-model="exportMonthRange" type="monthrange" range-separator="至"
+                            start-placeholder="开始月份" end-placeholder="结束月份" value-format="timestamp">
+            </el-date-picker>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="exportDialog = false">取 消</el-button>
+                <el-button type="primary" @click="exportDemo">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -140,7 +152,9 @@
         data() {
             return {
                 disabled:true,
+                exportMonthRange:[],
                 multipleSelection: [],
+                exportDialog:false,
                 dialogVisible: false,
                 inputForm: {
                     money: null,
@@ -159,6 +173,10 @@
                     workState: '',
                     pageSize: 10,
                     pageIndex: 1,
+                },
+                exportData:{
+                    startTime:'',
+                    endTime:'',
                 },
                 total: null,
                 depData: [],
@@ -182,6 +200,20 @@
             this.initSalary();
         },
         methods: {
+            exportDemo(){
+                if(this.exportMonthRange.length <= 0){
+                    this.$message.error("请选择月份");
+                    return;
+                }
+                this.exportData.startTime = this.exportMonthRange[0];
+                this.exportData.endTime = this.exportMonthRange[1];
+                window.open("/salary/handle/exportSalaryStatistics?startTime="+this.exportData.startTime+"&endTime="+this.exportData.endTime, "_parent");
+                this.exportDialog = false;
+            },
+            openExportDialog(){
+                this.exportDialog = true;
+                this.exportMonthRange = [];
+            },
             delMul(){
                 this.$confirm('此操作将删除选中员工薪资数据, 是否继续?', '提示', {
                     confirmButtonText: '确定',

@@ -16,7 +16,7 @@
                         <el-dropdown @command="commandEvent">
                             <span class="el-dropdown-link">
                               <i><img :src="user.userFace" class="userFace"></i>
-                            {{user.username}}<i class="el-icon-arrow-down el-icon--right"></i>
+                            {{user.realName}}<i class="el-icon-arrow-down el-icon--right"></i>
                             </span>
                             <el-dropdown-menu slot="dropdown">
                                 <!--                        <el-dropdown-item command="userCenter">用户中心</el-dropdown-item>-->

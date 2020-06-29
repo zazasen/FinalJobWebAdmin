@@ -60,7 +60,7 @@
                 this.queryDepartmentName = data.name;
             },
             initDepData() {
-                getRequest("/attendance/statistics/getAllDepartment").then(resp => {
+                getRequest("/hr/statistics/getAllDepartment").then(resp => {
                     if (resp) {
                         this.depData = resp.data;
                     }
